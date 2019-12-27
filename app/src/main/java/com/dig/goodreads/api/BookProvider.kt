@@ -18,9 +18,9 @@ object BookProvider {
        // callback(book);
     }
 
-    fun searchBooks(searchString : String,callback: (_ : ArrayList<Book>) -> Unit){
+    fun searchBooks(searchString : String,page : Int = 1,callback: (_ : ArrayList<Book>) -> Unit){
         //val book = Book("test","test")
-        val url = URL("${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${Env.GOOD_READS_KEY}&q=$searchString")
+        val url = URL("${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${Env.GOOD_READS_KEY}&q=$searchString&page=$page")
         //callback(book);
         Log.d(TAG, "URL : " +  url.toString())
 
