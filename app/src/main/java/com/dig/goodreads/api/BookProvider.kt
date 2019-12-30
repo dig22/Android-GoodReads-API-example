@@ -4,14 +4,15 @@ import android.util.Log
 import com.dig.goodreads.constants.ApiGlobals
 import com.dig.goodreads.constants.Env
 import com.dig.goodreads.helper.ResponseConverter
+import com.dig.goodreads.helper.ResponseConverter.HTML2Text
 import com.dig.goodreads.model.Book
 import org.jetbrains.anko.doAsync
-import org.json.JSONObject
 import java.net.URL
 
 
-const val TAG ="BookProvider"
 object BookProvider {
+
+    val TAG ="BookProvider"
 
     fun testFetch(callback: (_ : Book) -> Unit){
        // val book = Book("test","test")
@@ -26,11 +27,9 @@ object BookProvider {
 
         doAsync {
             try{
+
                 var response = url.readText()
-
                 var json =  ResponseConverter.XMLtoJSON(response)
-
-
 
                 val books = ArrayList<Book>()
 
@@ -45,11 +44,15 @@ object BookProvider {
                     val item = responseBooks.getJSONObject(i)
 
                     val book = item.getJSONObject("best_book")
-                    val id = book.getJSONObject("id").getString("content")
+                    val id = book.getJSONObject("id").getInt("content")
                     val name = book.getString("title")
                     val imageUrl = book.getString("small_image_url")
+                    val imageUrlLarge = book.getString("image_url")
 
-                    books.add(Book(id,name,imageUrl))
+                    val authorId = book.getJSONObject("author")
+                        .getJSONObject("id").getInt("content")
+
+                    books.add(Book(id,name,imageUrl,authorId,imageUrlLarge))
                 }
 
                 callback(books)
@@ -60,6 +63,35 @@ object BookProvider {
             }
         }
 
+    }
+
+    fun getBookDescription(id : Int,callback: (description : String) -> Unit){
+
+        val url = URL("${ApiGlobals.GOOD_READS_HOME}book/isbn/$id?key=${Env.GOOD_READS_KEY}")
+
+        Log.d(TAG, "URL : getBook :  ${url.toString()}")
+
+        doAsync {
+
+            try{
+                var response = url.readText()
+                var json =  ResponseConverter.XMLtoJSON(response)
+
+                var responseBookDescription = json?.getJSONObject("GoodreadsResponse")!!
+                    .getJSONObject("book")
+                    .getString("description")
+
+                Log.d(TAG, "URL : BookDescription :  $responseBookDescription")
+
+                //val escaped: String =
+
+                callback(HTML2Text(responseBookDescription))
+
+            }catch (e : Exception){
+                e.printStackTrace()
+            }
+
+        }
     }
 
 }

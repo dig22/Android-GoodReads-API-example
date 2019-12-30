@@ -16,9 +16,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.linearLayout
 
 
-const val TAG = "MainActivity"
+
 
 class MainActivity : AppCompatActivity() {
+
+    val TAG = "MainActivity"
 
     lateinit var manager : LinearLayoutManager
 
