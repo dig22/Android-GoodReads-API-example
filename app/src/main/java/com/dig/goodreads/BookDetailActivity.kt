@@ -18,6 +18,8 @@ class BookDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
+        actionBar?.setDisplayHomeAsUpEnabled(true);
+
         val book = intent.getParcelableExtra<Book>("book")
 
         this.book = book

@@ -1,21 +1,20 @@
 package com.dig.goodreads
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
-import android.widget.Adapter
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.api.BookProvider
 import com.dig.goodreads.helper.BookAdapter
 import com.dig.goodreads.model.Book
-import com.dig.goodreads.view.BookListItem
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.linearLayout
-
-
+import org.jetbrains.anko.sdk27.coroutines.onClose
 
 
 class MainActivity : AppCompatActivity() {
@@ -83,14 +82,28 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 page = 1
+                
                 fetchBooks(page,true)
                 return false
             }
 
         })
+
+       /* searchView. {
+            Log.d(TAG, "close")
+            searchView.clearFocus()
+        }*/
+
+      //  searchView.key
+    }
+
+    override fun onResume() {
+        super.onResume()
+        searchView.clearFocus()
     }
 
     private fun fetchBooks(page : Int = 1, refresh :Boolean = false) {
+        progressBar.visibility = View.VISIBLE
         if(refresh){
             listOfBooks.clear()
             recyclerBookList.adapter?.notifyDataSetChanged()
@@ -99,7 +112,16 @@ class MainActivity : AppCompatActivity() {
             listOfBooks.addAll(it)
             runOnUiThread{
                 recyclerBookList.adapter?.notifyDataSetChanged()
+                progressBar.visibility = View.GONE
             }
         }
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+       // val imm: InputMethodManager =
+        //    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
     }
 }
