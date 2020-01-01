@@ -1,30 +1,69 @@
 package com.dig.goodreads
 
-import android.os.Build
-import android.util.Log
+
 import com.dig.goodreads.api.BookProvider
+import com.dig.goodreads.api.book.BookDetailEndPoint
+import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
-import io.mockk.*
+import com.nhaarman.mockitokotlin2.capture
+import net.bytebuddy.matcher.ElementMatchers.any
+import org.hamcrest.CoreMatchers.`is`
+import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
+import org.mockito.*
+import org.mockito.Mockito.*
+import org.mockito.junit.MockitoJUnitRunner
 
 
 typealias MyCallback = (book: ArrayList<Book>) -> Unit
 
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [Build.VERSION_CODES.O_MR1])
+@RunWith(MockitoJUnitRunner::class)
 class BookProviderUnitTest {
 
-    @Test
-    fun can_fetchBooks() {
+    lateinit var bookSearchEndPoint : BookSearchEndPoint
+    @Mock lateinit var bookDetailEndPoint : BookDetailEndPoint
+    @Mock lateinit var bookSearchCallback : BookSearchEndPoint.Callback
 
-        val mock = spyk<BookProvider>()
-        val cb = mockk<MyCallback>(relaxed = true)
-        mock.searchBooks("test",cb)
+    @Captor lateinit var booksCaptor: ArgumentCaptor<ArrayList<Book>>
 
-        verify (timeout = 5000){ cb.invoke(any()) }
+    var bookProvider : BookProvider? = null
 
+    @Before
+    fun setUp() {
+        bookSearchEndPoint = BookSearchEndPointTD()
+        bookProvider = BookProvider.getInstance(bookSearchEndPoint,bookDetailEndPoint)
+        //bookProvider = BookProvider.INSTANCE
+
+        //   `when`(bookSearchCallback.onFetchSuccess(any())).thenReturn()
     }
+
+
+    @Test
+    fun searchBooks_success_callbackWithCorrectData() {
+        bookProvider?.searchBooks("test",1,bookSearchCallback)
+
+        verify(this.bookSearchCallback).onFetchSuccess(capture(booksCaptor))
+
+        //println(booksCaptor.value)
+
+        Assert.assertThat(booksCaptor.value , `is`(BookSearchEndPointTD.generateBooks()))
+    }
+
+    class BookSearchEndPointTD : BookSearchEndPoint(){
+        override fun searchBooks(searchString: String, page: Int, callback: Callback) {
+            //super.searchBooks(null)
+            callback.onFetchSuccess(generateBooks())
+        }
+
+        companion object{
+            fun generateBooks(): ArrayList<Book> {
+                val books = ArrayList<Book>()
+                books.add(Book(1,"test1","imageURL",1))
+                return books
+            }
+        }
+    }
+
 }
