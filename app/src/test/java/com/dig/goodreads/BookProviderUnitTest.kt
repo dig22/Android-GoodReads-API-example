@@ -1,6 +1,7 @@
 package com.dig.goodreads
 
 
+import android.app.Application
 import com.dig.goodreads.api.BookProvider
 import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
@@ -25,6 +26,7 @@ class BookProviderUnitTest {
     lateinit var bookSearchEndPoint : BookSearchEndPoint
     @Mock lateinit var bookDetailEndPoint : BookDetailEndPoint
     @Mock lateinit var bookSearchCallback : BookSearchEndPoint.Callback
+    @Mock lateinit var application: Application
 
     @Captor lateinit var booksCaptor: ArgumentCaptor<ArrayList<Book>>
 
@@ -33,7 +35,7 @@ class BookProviderUnitTest {
     @Before
     fun setUp() {
         bookSearchEndPoint = BookSearchEndPointTD()
-        bookProvider = BookProvider.getInstance(bookSearchEndPoint,bookDetailEndPoint)
+        bookProvider = BookProvider.init(application,bookSearchEndPoint,bookDetailEndPoint)
         //bookProvider = BookProvider.INSTANCE
 
         //   `when`(bookSearchCallback.onFetchSuccess(any())).thenReturn()

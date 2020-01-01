@@ -12,6 +12,6 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BookProvider.getInstance(bookSearchEndPoint,bookDetailEndPoint)
+        BookProvider.init(this,bookSearchEndPoint,bookDetailEndPoint)
     }
 }

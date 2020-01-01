@@ -7,7 +7,6 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dig.goodreads.App
 import com.dig.goodreads.R
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.api.BookProvider
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bookProvider = BookProvider.INSTANCE
+        bookProvider = BookProvider.instance
 
          manager = LinearLayoutManager(this)
          recyclerBookList.layoutManager = manager

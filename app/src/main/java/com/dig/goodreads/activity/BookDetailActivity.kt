@@ -2,8 +2,6 @@ package com.dig.goodreads.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.dig.goodreads.App
 import com.dig.goodreads.R
 import com.dig.goodreads.api.BookProvider
 import com.dig.goodreads.api.book.BookDetailEndPoint
@@ -24,7 +22,7 @@ class BookDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
-        bookProvider = BookProvider.INSTANCE
+        bookProvider = BookProvider.instance
 
         actionBar?.setDisplayHomeAsUpEnabled(true);
 

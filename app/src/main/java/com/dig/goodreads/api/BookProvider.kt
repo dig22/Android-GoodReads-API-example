@@ -1,8 +1,9 @@
 package com.dig.goodreads.api
 
+import android.app.Application
+import android.content.Context
 import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
-import com.dig.goodreads.helper.SingletonHolder
 import java.lang.RuntimeException
 
 class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoint,
@@ -21,14 +22,20 @@ class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoin
 
     companion object {
 
-        @Volatile var INSTANCE: BookProvider? = null
-       // get() =  if (INSTANCE != null) INSTANCE else throw RuntimeException("Dependency Not Injected")
+        @Volatile var instance: BookProvider? = null
 
-        fun getInstance(bookSearchEndPoint: BookSearchEndPoint,
-                        bookDetailEndPoint: BookDetailEndPoint): BookProvider =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BookProvider(bookSearchEndPoint,bookDetailEndPoint).also { INSTANCE = it }
+        fun init(context: Context ,bookSearchEndPoint: BookSearchEndPoint,
+                        bookDetailEndPoint: BookDetailEndPoint): BookProvider {
+            synchronized(this) {
+                if(context !is Application){
+                       throw RuntimeException("\n\nBookProvider can only be initialized with Application context\n" +
+                              "if already initialized use INSTANCE directly\n\n")
+                }
+                if(instance == null)
+                    instance =  BookProvider(bookSearchEndPoint,bookDetailEndPoint)
+                return instance!!
             }
+        }
 
     }
 }
