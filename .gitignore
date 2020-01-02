@@ -15,6 +15,7 @@
 
 #idea
 .idea
+projectFilesBackup
 
 #ENV
 Env.kt
