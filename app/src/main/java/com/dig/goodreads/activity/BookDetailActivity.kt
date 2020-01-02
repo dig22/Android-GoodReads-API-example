@@ -2,6 +2,7 @@ package com.dig.goodreads.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.dig.goodreads.R
 import com.dig.goodreads.api.BookProvider
 import com.dig.goodreads.api.book.BookDetailEndPoint
@@ -39,11 +40,14 @@ class BookDetailActivity : AppCompatActivity() {
 
     fun fetchBookDescription (bookId : Int){
 
+        bookDetailsProgressBar.visibility = View.VISIBLE
+
         bookProvider?.getBookDescription(bookId,object : BookDetailEndPoint.Callback{
             override fun onFetchSuccess(description: String) {
                 runOnUiThread{
                     bookDetailBookDescription.setText(description)
-            }
+                    bookDetailsProgressBar.visibility = View.GONE
+                 }
             }
 
             override fun onFetchFailed() {

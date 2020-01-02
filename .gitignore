@@ -13,5 +13,8 @@
 .externalNativeBuild
 .cxx
 
+#idea
+.idea
+
 #ENV
 Env.kt
