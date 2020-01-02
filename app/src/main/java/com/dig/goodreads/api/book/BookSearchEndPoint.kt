@@ -1,7 +1,7 @@
 package com.dig.goodreads.api.book
 
+import com.dig.goodreads.BuildConfig
 import com.dig.goodreads.constants.ApiGlobals
-import com.dig.goodreads.constants.Env
 import com.dig.goodreads.helper.ResponseConverter
 import com.dig.goodreads.model.Book
 import com.github.kittinunf.fuel.httpGet
@@ -9,7 +9,7 @@ import com.github.kittinunf.fuel.httpGet
 
 open class BookSearchEndPoint {
 
-    val SEARCH_API = "${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${Env.GOOD_READS_KEY}"
+    val SEARCH_API = "${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${BuildConfig.GOOD_READS_KEY}"
 
     open fun searchBooks (searchString : String,page : Int = 1,callback: Callback){
 

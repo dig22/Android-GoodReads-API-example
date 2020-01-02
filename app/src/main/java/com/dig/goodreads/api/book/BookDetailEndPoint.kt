@@ -1,7 +1,7 @@
 package com.dig.goodreads.api.book
 
+import com.dig.goodreads.BuildConfig
 import com.dig.goodreads.constants.ApiGlobals
-import com.dig.goodreads.constants.Env
 import com.dig.goodreads.helper.ResponseConverter
 import com.dig.goodreads.helper.ResponseConverter.HTML2Text
 import com.dig.goodreads.model.Book
@@ -13,7 +13,7 @@ class BookDetailEndPoint {
 
     fun getDescription (id : Int,callback: Callback){
 
-        val url : String = "$BOOK_DETAILS_API$id?key=${Env.GOOD_READS_KEY}"
+        val url : String = "$BOOK_DETAILS_API$id?key=${BuildConfig.GOOD_READS_KEY}"
 
         url.httpGet().responseString { request, response, result ->
 

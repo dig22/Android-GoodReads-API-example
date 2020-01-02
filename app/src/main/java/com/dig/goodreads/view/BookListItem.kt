@@ -2,6 +2,7 @@ package com.dig.goodreads.view
 
 import android.content.Context
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.dig.goodreads.activity.BookDetailActivity
@@ -32,14 +33,13 @@ class BookListItem : ConstraintLayout, View.OnClickListener {
     }
 
     private fun initView() {
-        val view = View.inflate(context, R.layout.view_book_list_item,null)
-        addView(view)
+        LayoutInflater.from(context).inflate(R.layout.view_book_list_item, this, true);
     }
 
+    //TODO: Should Be send back to caller
     override fun onClick(v: View?) {
         val bookDetailIntent = Intent(context, BookDetailActivity::class.java)
         bookDetailIntent.putExtra("book", book) //Optional parameters
-
         context.startActivity(bookDetailIntent)
     }
 
