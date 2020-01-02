@@ -1,6 +1,8 @@
 package com.dig.goodreads.activity
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.AbsListView
 import android.widget.SearchView
@@ -13,6 +15,7 @@ import com.dig.goodreads.api.BookProvider
 import com.dig.goodreads.helper.BookAdapter
 import com.dig.goodreads.model.Book
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.sdk27.coroutines.onClose
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    var searchThrottle = Handler()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,8 +54,6 @@ class MainActivity : AppCompatActivity() {
 
          manager = LinearLayoutManager(this)
          recyclerBookList.layoutManager = manager
-
-         fetchBooks(page)
 
         val adapter = BookAdapter(listOfBooks,this)
         recyclerBookList.adapter = adapter
@@ -77,25 +80,30 @@ class MainActivity : AppCompatActivity() {
         })
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 page = 1
-                
-                fetchBooks(page,true)
+
+                searchThrottle.removeCallbacksAndMessages(null)
+
+                searchThrottle.postDelayed({
+                    fetchBooks(page,true)
+                }, 500)
+
                 return false
             }
 
         })
 
-       /* searchView. {
-            Log.d(TAG, "close")
-            searchView.clearFocus()
-        }*/
+       searchView.onClose {
+           Log.d(TAG,"Search Closed")
+       }
 
-      //  searchView.key
+        fetchBooks(page)
     }
 
     override fun onResume() {
@@ -127,9 +135,12 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        super.onBackPressed()
-       // val imm: InputMethodManager =
-        //    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        //super.onBackPressed()
+        if (!searchView.isFocused) {
+            searchView.clearFocus()
+        } else {
+            super.onBackPressed()
+        }
 
     }
 }
