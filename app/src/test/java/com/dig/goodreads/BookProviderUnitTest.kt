@@ -53,9 +53,9 @@ class BookProviderUnitTest {
     }
 
     class BookSearchEndPointTD : BookSearchEndPoint(){
-        override fun searchBooks(searchString: String, page: Int, callback: Callback) {
+        override fun searchBooks(searchString: String, page: Int, callback: Callback?) {
             //super.searchBooks(null)
-            callback.onFetchSuccess(generateBooks())
+            callback?.onFetchSuccess(generateBooks())
         }
 
         companion object{

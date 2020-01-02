@@ -9,12 +9,14 @@ import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.model.Book
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_book_detail.*
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class BookDetailActivity : AppCompatActivity() {
+class BookDetailActivity : AppCompatActivity() , KoinComponent {
 
     val TAG ="BookDetailActivity"
 
-    var bookProvider : BookProvider? = null
+    val bookProvider : BookProvider by inject()
 
 
     lateinit var book : Book
@@ -23,7 +25,7 @@ class BookDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
-        bookProvider = BookProvider.instance
+        //bookProvider = BookProvider()
 
         actionBar?.setDisplayHomeAsUpEnabled(true);
 

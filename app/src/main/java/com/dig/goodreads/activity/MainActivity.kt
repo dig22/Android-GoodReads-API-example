@@ -16,14 +16,16 @@ import com.dig.goodreads.helper.BookAdapter
 import com.dig.goodreads.model.Book
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.sdk27.coroutines.onClose
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() , KoinComponent {
 
     val TAG = "MainActivity"
 
     lateinit var manager : LinearLayoutManager
-    var bookProvider : BookProvider? = null
+    val bookProvider : BookProvider by inject()
 
     var page = 1
 
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bookProvider = BookProvider.instance
+      //  bookProvider = BookProvider.instance
 
          manager = LinearLayoutManager(this)
          recyclerBookList.layoutManager = manager

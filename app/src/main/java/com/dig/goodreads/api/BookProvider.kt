@@ -6,7 +6,7 @@ import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import java.lang.RuntimeException
 
-class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoint,
+class BookProvider constructor(val bookSearchEndPoint: BookSearchEndPoint,
                                        val bookDetailEndPoint: BookDetailEndPoint) {
 
     val TAG ="BookProvider"
@@ -20,7 +20,7 @@ class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoin
         bookDetailEndPoint.getDescription(id, callback)
     }
 
-    companion object {
+    /*companion object {
 
         @Volatile var instance: BookProvider? = null
 
@@ -36,6 +36,5 @@ class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoin
                 return instance!!
             }
         }
-
-    }
+    }*/
 }
