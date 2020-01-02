@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         bookProvider?.searchBooks(searchQuery,page,object : BookSearchEndPoint.Callback{
-            override fun onFetchSuccess(books: ArrayList<Book>) {
+            override fun onFetchSuccess(books: List<Book>) {
                 listOfBooks.addAll(books)
                 runOnUiThread{
                     recyclerBookList.adapter?.notifyDataSetChanged()

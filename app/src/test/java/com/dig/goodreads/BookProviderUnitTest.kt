@@ -7,7 +7,6 @@ import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
 import com.nhaarman.mockitokotlin2.capture
-import net.bytebuddy.matcher.ElementMatchers.any
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert
 import org.junit.Before

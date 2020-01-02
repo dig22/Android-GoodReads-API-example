@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.model.Book
 import com.dig.goodreads.view.BookListItem
 
-class BookAdapter(val books : ArrayList<Book>, val context : Context) : RecyclerView.Adapter<ViewHolder>(){
+class BookAdapter(val books : List<Book>, val context : Context) : RecyclerView.Adapter<ViewHolder>(){
 
     override fun getItemCount(): Int {
         return books.size

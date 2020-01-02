@@ -12,11 +12,11 @@ class BookProvider private constructor(val bookSearchEndPoint: BookSearchEndPoin
     val TAG ="BookProvider"
 
 
-    fun searchBooks(searchString : String,page : Int = 1,callback: BookSearchEndPoint.Callback){
+    fun searchBooks(searchString : String,page : Int = 1,callback: BookSearchEndPoint.Callback?){
         bookSearchEndPoint.searchBooks(searchString,page,callback)
     }
 
-    fun getBookDescription(id : Int,callback: BookDetailEndPoint.Callback){
+    fun getBookDescription(id : Int,callback: BookDetailEndPoint.Callback?){
         bookDetailEndPoint.getDescription(id, callback)
     }
 

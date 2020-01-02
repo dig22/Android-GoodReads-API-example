@@ -11,7 +11,7 @@ class BookDetailEndPoint {
 
     val BOOK_DETAILS_API = "${ApiGlobals.GOOD_READS_HOME}book/isbn/"
 
-    fun getDescription (id : Int,callback: Callback){
+    fun getDescription (id : Int,callback: Callback?){
 
         val url : String = "$BOOK_DETAILS_API$id?key=${BuildConfig.GOOD_READS_KEY}"
 
@@ -23,7 +23,7 @@ class BookDetailEndPoint {
                     .getJSONObject("book")
                     .getString("description")
 
-            callback.onFetchSuccess(HTML2Text(responseBookDescription))
+            callback?.onFetchSuccess(HTML2Text(responseBookDescription))
 
         }
     }

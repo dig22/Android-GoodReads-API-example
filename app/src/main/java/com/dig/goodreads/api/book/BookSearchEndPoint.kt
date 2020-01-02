@@ -11,7 +11,7 @@ open class BookSearchEndPoint {
 
     val SEARCH_API = "${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${BuildConfig.GOOD_READS_KEY}"
 
-    open fun searchBooks (searchString : String,page : Int = 1,callback: Callback){
+    open fun searchBooks (searchString : String,page : Int = 1,callback: Callback?){
 
         val url : String = "$SEARCH_API&q=$searchString&page=$page"
         //Log.d(TAG, "URL : " +  url.toString())
@@ -43,13 +43,13 @@ open class BookSearchEndPoint {
                 books.add(Book(id,name,imageUrl,authorId,imageUrlLarge))
             }
 
-            callback.onFetchSuccess(books)
+            callback?.onFetchSuccess(books)
         }
 
     }
 
     interface Callback{
-        fun onFetchSuccess(books : ArrayList<Book>)
+        fun onFetchSuccess(books: List<Book>)
         fun onFetchFailed()
     }
 }
