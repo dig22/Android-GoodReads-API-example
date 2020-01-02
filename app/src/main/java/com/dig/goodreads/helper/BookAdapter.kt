@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.model.Book
 import com.dig.goodreads.view.BookListItem
 
-class BookAdapter(val books : List<Book>, val context : Context) : RecyclerView.Adapter<ViewHolder>(){
+class BookAdapter(val books : List<Book>) : RecyclerView.Adapter<ViewHolder>(){
 
     override fun getItemCount(): Int {
         return books.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       return ViewHolder(BookListItem(context))
+       return ViewHolder(BookListItem(parent.context))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

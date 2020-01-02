@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
          manager = LinearLayoutManager(this)
          recyclerBookList.layoutManager = manager
 
-        val adapter = BookAdapter(listOfBooks,this)
+        val adapter = BookAdapter(listOfBooks)
         recyclerBookList.adapter = adapter
 
         recyclerBookList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
