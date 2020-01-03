@@ -1,10 +1,9 @@
 package com.dig.goodreads.api.book
 
 import com.dig.goodreads.BuildConfig
-import com.dig.goodreads.constants.ApiGlobals
+import com.dig.goodreads.constant.ApiGlobals
 import com.dig.goodreads.helper.ResponseConverter
 import com.dig.goodreads.helper.ResponseConverter.HTML2Text
-import com.dig.goodreads.model.Book
 import com.github.kittinunf.fuel.httpGet
 
 class BookDetailEndPoint {
