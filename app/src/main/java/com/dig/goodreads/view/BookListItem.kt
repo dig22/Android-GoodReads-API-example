@@ -29,7 +29,7 @@ class BookListItem : ConstraintLayout, View.OnClickListener {
     fun initData(book : Book){
         this.book = book
         bookItemName.setText(book.name)
-        Picasso.get().load(book?.imageUrl).into(bookItemImage);
+        Picasso.get().load(book.imageUrl).into(bookItemImage);
     }
 
     private fun initView() {

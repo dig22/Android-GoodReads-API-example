@@ -44,7 +44,7 @@ class MainActivity() : AppCompatActivity() , KoinComponent {
 
     var searchQuery : String =  "test"
         get() {
-            if(searchView == null)
+            if(searchView == null || searchView?.query.isNullOrBlank() )
                 return "test"
             else{
                 return searchView?.query.toString()
@@ -72,7 +72,7 @@ class MainActivity() : AppCompatActivity() , KoinComponent {
                 totalItems = manager.itemCount
                 scrolledOut = manager.findFirstVisibleItemPosition()
 
-                if(isScrolling && ((currentItems!! + scrolledOut!!) == totalItems)){
+                if(isScrolling && ((currentItems!! + scrolledOut!!) >= totalItems!! -1 )){
                     //TODO progressBar.visibility = View.VISIBLE
                     bookViewModel.fetchBooks(searchQuery,++page,false)
                 }
@@ -105,6 +105,7 @@ class MainActivity() : AppCompatActivity() , KoinComponent {
                 is BookSearchState.BooksLoaded -> {
                     this.books.clear()
                     this.books.addAll(postState.books)
+                    this.books.add(Book(0,"PLACEHOLDER","PLACEHOLDER",1))
                     recyclerBookList.adapter?.notifyDataSetChanged()
                     //TODO progressBar.visibility = View.GONE
                 }
@@ -129,6 +130,7 @@ class MainActivity() : AppCompatActivity() , KoinComponent {
 
         searchView?.onClose {
             Log.d(TAG,"Search Closed")
+            bookViewModel.fetchBooks("test",page,true)
         }
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
