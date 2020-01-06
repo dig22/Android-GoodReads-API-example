@@ -1,16 +1,16 @@
-package com.dig.goodreads.viewmodel
+package com.dig.goodreads.components.book
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dig.goodreads.api.BookProvider
+
+import com.dig.goodreads.api.BookRepository
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
-import com.dig.goodreads.state.BookSearchState
 import org.koin.core.KoinComponent
 
-class BookViewModel constructor(private val bookProvider : BookProvider) : ViewModel() , KoinComponent{
+class BookViewModel constructor(private val bookRepository : BookRepository) : ViewModel() , KoinComponent{
 
     var listOfBooks : ArrayList<Book> = ArrayList()
 
@@ -40,7 +40,7 @@ class BookViewModel constructor(private val bookProvider : BookProvider) : ViewM
 
         privateState.value = BookSearchState.Loading
 
-        bookProvider.searchBooks(searchQuery,page,object : BookSearchEndPoint.Callback{
+        bookRepository.searchBooks(searchQuery,page,object : BookSearchEndPoint.Callback{
             override fun onFetchSuccess(books: List<Book>) {
                 listOfBooks.addAll(books)
 

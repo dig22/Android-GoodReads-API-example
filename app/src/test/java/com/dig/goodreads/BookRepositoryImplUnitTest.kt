@@ -2,7 +2,7 @@ package com.dig.goodreads
 
 
 import android.app.Application
-import com.dig.goodreads.api.BookProvider
+import com.dig.goodreads.api.BookRepositoryImpl
 import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 typealias MyCallback = (book: ArrayList<Book>) -> Unit
 
 @RunWith(MockitoJUnitRunner::class)
-class BookProviderUnitTest {
+class BookRepositoryImplUnitTest {
 
     lateinit var bookSearchEndPoint : BookSearchEndPoint
     @Mock lateinit var bookDetailEndPoint : BookDetailEndPoint
@@ -29,12 +29,12 @@ class BookProviderUnitTest {
 
     @Captor lateinit var booksCaptor: ArgumentCaptor<ArrayList<Book>>
 
-    var bookProvider : BookProvider? = null
+    var bookRepositoryImpl : BookRepositoryImpl? = null
 
     @Before
     fun setUp() {
         bookSearchEndPoint = BookSearchEndPointTD()
-        bookProvider = BookProvider.init(application,bookSearchEndPoint,bookDetailEndPoint)
+       // bookRepository = BookRepository.init(application,bookSearchEndPoint,bookDetailEndPoint)
         //bookProvider = BookProvider.INSTANCE
 
         //   `when`(bookSearchCallback.onFetchSuccess(any())).thenReturn()
@@ -43,7 +43,7 @@ class BookProviderUnitTest {
 
     @Test
     fun searchBooks_success_callbackWithCorrectData() {
-        bookProvider?.searchBooks("test",1,bookSearchCallback)
+        bookRepositoryImpl?.searchBooks("test",1,bookSearchCallback)
 
         verify(this.bookSearchCallback).onFetchSuccess(capture(booksCaptor))
 

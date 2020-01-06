@@ -1,4 +1,4 @@
-package com.dig.goodreads.view
+package com.dig.goodreads.components.ui
 
 import android.content.Context
 import android.view.LayoutInflater

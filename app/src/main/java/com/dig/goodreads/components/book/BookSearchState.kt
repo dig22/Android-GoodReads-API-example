@@ -1,4 +1,4 @@
-package com.dig.goodreads.state
+package com.dig.goodreads.components.book
 
 import com.dig.goodreads.model.Book
 
