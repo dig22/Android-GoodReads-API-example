@@ -8,9 +8,11 @@ import com.dig.goodreads.model.Book
 
 class BookDataSourceFactory : DataSource.Factory<Int, Book> {
 
-    private val mutableLiveData: MutableLiveData<BookDataSource>
-    private var bookDataSource: BookDataSource? = null
+    private val mutableLiveData: MutableLiveData<DataSource<Int, Book>>
+    var bookDataSource: BookDataSource? = null
     private val bookSearchEndPoint : BookSearchEndPoint
+
+    lateinit var searchQuery : String
 
     constructor(bookSearchEndPoint: BookSearchEndPoint) : super(){
         this.bookSearchEndPoint = bookSearchEndPoint
@@ -18,12 +20,14 @@ class BookDataSourceFactory : DataSource.Factory<Int, Book> {
     }
 
     override fun create(): DataSource<Int, Book> {
-        bookDataSource =  BookDataSource(bookSearchEndPoint)
+        bookDataSource =  BookDataSource(bookSearchEndPoint , searchQuery )
         mutableLiveData.postValue(bookDataSource)
         return bookDataSource!!
     }
 
-    fun getMutableLiveData(): MutableLiveData<BookDataSource> {
+
+
+    fun getMutableLiveData():  MutableLiveData<DataSource<Int, Book>> {
         return mutableLiveData
     }
 }

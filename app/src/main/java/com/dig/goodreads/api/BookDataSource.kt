@@ -6,14 +6,16 @@ import com.dig.goodreads.api.book.BookDetailEndPoint
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
 
-class BookDataSource (val bookSearchEndPoint: BookSearchEndPoint) :  PageKeyedDataSource<Int, Book>() {
+class BookDataSource (val bookSearchEndPoint: BookSearchEndPoint, var searchQuery : String) :  PageKeyedDataSource<Int, Book>() {
+
+   // var searchQuery : String = "test"
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Book>
     ) {
 
-        bookSearchEndPoint.searchBooks("test",1, object : BookSearchEndPoint.Callback{
+        bookSearchEndPoint.searchBooks(searchQuery,1, object : BookSearchEndPoint.Callback{
             override fun onFetchSuccess(books: List<Book>) {
                 callback.onResult(books,null,2)
             }
@@ -24,7 +26,7 @@ class BookDataSource (val bookSearchEndPoint: BookSearchEndPoint) :  PageKeyedDa
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
-        bookSearchEndPoint.searchBooks("test",params.key, object : BookSearchEndPoint.Callback{
+        bookSearchEndPoint.searchBooks(searchQuery,params.key, object : BookSearchEndPoint.Callback{
             override fun onFetchSuccess(books: List<Book>) {
                 callback.onResult(books,params.key+1)
             }

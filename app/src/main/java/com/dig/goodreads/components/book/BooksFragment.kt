@@ -2,12 +2,10 @@ package com.dig.goodreads.components.book
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
@@ -25,7 +23,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
     val TAG = "BooksFragment"
 
-    val bookViewModelWithPaging : BookViewModelWithPaging by viewModel()
+    val bookViewModel : BookViewModel by viewModel()
 
     lateinit var manager : LinearLayoutManager
     var searchThrottle = Handler()
@@ -50,6 +48,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true);
 
     }
 
@@ -69,7 +68,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
 
 
-        bookViewModelWithPaging.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
+        bookViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
             this.books = it
 
             val adapter = BookPagedListAdapter(this)
@@ -80,6 +79,9 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
             recyclerBookList.adapter?.notifyDataSetChanged()
 
         })
+
+
+        bookViewModel.search("test")
 
         return thisFragmentLayout
     }
@@ -98,6 +100,35 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
     override fun bookClicked(book: Book) {
         findNavController().navigate(BooksFragmentDirections.actionBooksFragmentToDetailsFragment(book))
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val mSearchMenuItem: MenuItem = menu.findItem(R.id.appBarSearch)
+        val searchView = mSearchMenuItem.getActionView() as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                bookViewModel.search(query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchThrottle.removeCallbacksAndMessages(null)
+
+                searchThrottle.postDelayed({
+                    //TODO   progressBar.visibility = View.VISIBLE
+                    bookViewModel.search(newText.toString())
+                }, 500)
+
+                return false
+            }
+
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu ,   inflater : MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu, menu)
     }
 
 }

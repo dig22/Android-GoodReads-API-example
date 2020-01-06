@@ -6,7 +6,6 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dig.goodreads.model.Book
-import com.dig.goodreads.components.book.BookViewModelDeprecated
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
@@ -14,8 +13,6 @@ import org.koin.core.KoinComponent
 class MainActivityDeprecated() : AppCompatActivity() , KoinComponent {
 
     val TAG = "MainActivity"
-
-    val bookViewModelDeprecated : BookViewModelDeprecated by viewModel()
 
     var page = 1
 
@@ -84,12 +81,7 @@ class MainActivityDeprecated() : AppCompatActivity() , KoinComponent {
 //            override fun onQueryTextChange(newText: String?): Boolean {
 //                page = 1
 //
-//                searchThrottle.removeCallbacksAndMessages(null)
 //
-//                searchThrottle.postDelayed({
-//                    //TODO   progressBar.visibility = View.VISIBLE
-//                    bookViewModel.fetchBooks(newText.toString(),page,true)
-//                }, 500)
 //
 //                return false
 //            }
