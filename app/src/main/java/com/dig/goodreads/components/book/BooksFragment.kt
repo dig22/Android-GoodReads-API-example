@@ -10,34 +10,29 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.R
-import com.dig.goodreads.components.ui.BookListItem
 import com.dig.goodreads.model.Book
 import kotlinx.android.synthetic.main.fragment_books.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 
-class BooksFragment : Fragment() ,OnBookClickListener, KoinComponent{
+class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, KoinComponent{
 
-    val TAG = "MainActivity"
+    val TAG = "BooksFragment"
 
-    val bookViewModel : BookViewModel by viewModel()
-
-    var page = 1
+    val bookViewModelWithPaging : BookViewModelWithPaging by viewModel()
 
     lateinit var manager : LinearLayoutManager
     var searchThrottle = Handler()
 
-    val books : ArrayList<Book> = ArrayList()
-    val bookViews : ArrayList<BookListItem> = ArrayList()
+    var books : PagedList<Book>?  = null
 
-    var isScrolling = false
-    var currentItems : Int? = null
-    var totalItems : Int? = null
-    var scrolledOut : Int? = null
+
 
     var searchView  : SearchView? = null
 
@@ -56,33 +51,6 @@ class BooksFragment : Fragment() ,OnBookClickListener, KoinComponent{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-
-//        recyclerBookList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-//
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                currentItems = manager.childCount
-//                totalItems = manager.itemCount
-//                scrolledOut = manager.findFirstVisibleItemPosition()
-//
-//                if(isScrolling && ((currentItems!! + scrolledOut!!) >= totalItems!! -1 )){
-//                    //TODO progressBar.visibility = View.VISIBLE
-//                    bookViewModel.fetchBooks(searchQuery,++page,false)
-//                }
-//            }
-//
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                if(newState ==  AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-//                    isScrolling = true
-//                }
-//            }
-//        })
-
-
-
     }
 
     override fun onCreateView(
@@ -99,40 +67,19 @@ class BooksFragment : Fragment() ,OnBookClickListener, KoinComponent{
 
         recyclerBookList.layoutManager = manager
 
-        val adapter = BookAdapter(books, this)
-        recyclerBookList.adapter = adapter
 
 
-        bookViewModel.postLiveData.observe(this, Observer<BookSearchState> { postState ->
+        bookViewModelWithPaging.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
+            this.books = it
 
-            if (postState == null) {
-                return@Observer
-            }
+            val adapter = BookPagedListAdapter(this)
+            adapter.submitList(books)
 
-            when (postState) {
-                is BookSearchState.Startup -> {
-                    bookViewModel.fetchBooks(searchQuery, page)
-                }
+            recyclerBookList.itemAnimator = DefaultItemAnimator()
+            recyclerBookList.adapter = adapter
+            recyclerBookList.adapter?.notifyDataSetChanged()
 
-                is BookSearchState.Loading -> {
-                    //TODO progressBar.visibility = View.VISIBLE
-                }
-
-                is BookSearchState.BooksLoaded -> {
-                    this.books.clear()
-                    this.books.addAll(postState.books)
-                    this.books.add(Book(0,"PLACEHOLDER","PLACEHOLDER",1))
-
-//                    for (book in books){
-//                        this.bookViews.add(BookListItem(context,book))
-//                    }
-
-                    recyclerBookList.adapter?.notifyDataSetChanged()
-                    //TODO progressBar.visibility = View.GONE
-                }
-            }
         })
-
 
         return thisFragmentLayout
     }

@@ -9,8 +9,8 @@ import com.dig.goodreads.api.BookRepository
 import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
 import org.koin.core.KoinComponent
-
-class BookViewModel constructor(private val bookRepository : BookRepository) : ViewModel() , KoinComponent{
+@Deprecated("")
+class BookViewModelDeprecated constructor(private val bookRepository : BookRepository) : ViewModel() , KoinComponent{
 
     var listOfBooks : ArrayList<Book> = ArrayList()
 

@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.model.Book
 import com.dig.goodreads.components.ui.BookListItem
 import com.dig.goodreads.components.ui.BookListProgressBar
-
-class BookAdapter(val books : List<Book> , private val bookClickListener: OnBookClickListener) : RecyclerView.Adapter<ViewHolder>(){
+@Deprecated("")
+class BookAdapterDeprecated(val books : List<Book>, private val bookClickListener: OnBookClickListener) : RecyclerView.Adapter<BookAdapterDeprecated.ViewHolder>(){
 
     private val TYPE_BOOK_ITEM = 1
     private val TYPE_PROGRESS_BAR = 2
@@ -46,15 +46,16 @@ class BookAdapter(val books : List<Book> , private val bookClickListener: OnBook
             bookClickListener.bookClicked(book)
         }
     }
-}
 
-class ViewHolder : RecyclerView.ViewHolder {
-    val view : View
-    constructor(view : View) : super(view){
-        this.view = view
+    class ViewHolder : RecyclerView.ViewHolder {
+        val view : View
+        constructor(view : View) : super(view){
+            this.view = view
+        }
+    }
+
+    interface OnBookClickListener {
+        fun bookClicked(book: Book)
     }
 }
 
-interface OnBookClickListener {
-    fun bookClicked(book: Book)
-}

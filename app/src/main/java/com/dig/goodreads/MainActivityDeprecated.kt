@@ -6,7 +6,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dig.goodreads.model.Book
-import com.dig.goodreads.components.book.BookViewModel
+import com.dig.goodreads.components.book.BookViewModelDeprecated
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
@@ -15,7 +15,7 @@ class MainActivityDeprecated() : AppCompatActivity() , KoinComponent {
 
     val TAG = "MainActivity"
 
-    val bookViewModel : BookViewModel by viewModel()
+    val bookViewModelDeprecated : BookViewModelDeprecated by viewModel()
 
     var page = 1
 
