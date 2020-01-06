@@ -23,7 +23,7 @@ class BookDetailEndPoint {
                     .getString("description")
 
             callback?.onFetchSuccess(HTML2Text(responseBookDescription))
-
+            //TODO handle Error
         }
     }
 

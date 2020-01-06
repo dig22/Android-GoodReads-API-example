@@ -44,6 +44,7 @@ open class BookSearchEndPoint {
             }
 
             callback?.onFetchSuccess(books)
+            //TODO handle Error
         }
 
     }
