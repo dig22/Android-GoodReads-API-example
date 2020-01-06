@@ -30,7 +30,7 @@ class BookViewModel : ViewModel   {
             .setEnablePlaceholders(true)
             .setInitialLoadSizeHint(10)
             .setPageSize(20)
-            .setPrefetchDistance(4)
+            .setPrefetchDistance(20)
             .build()
 
          executor = Executors.newFixedThreadPool(5)
