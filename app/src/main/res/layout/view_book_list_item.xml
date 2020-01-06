@@ -17,7 +17,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/bookItemImage"
@@ -28,7 +27,8 @@
         android:id="@+id/bookItemImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:padding="10px"
+        android:contentDescription="@string/image_content_description"
+        android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/screen_background_dark_transparent" />
