@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.dig.goodreads.R
 import com.dig.goodreads.model.Book
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
@@ -57,9 +58,11 @@ class DetailsFragment : Fragment() , KoinComponent {
             when (postState) {
                 //TODO : Other States
                 is DetailsState.Startup -> {
+                    bookDetailsProgressBar.visibility = View.VISIBLE
                     detailsViewModel.fetchDetails(book)
                 }
                 is DetailsState.DetailsLoaded ->{
+                    bookDetailsProgressBar.visibility = View.GONE
                     this.bookDetailBookDescription.setText(postState.details)
                 }
             }

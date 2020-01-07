@@ -36,6 +36,10 @@ android {
 }
 
 dependencies {
+
+    def retrofitVersion = '2.7.1'
+    def fuelVersion = '2.2.1'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -51,7 +55,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'com.github.kittinunf.fuel:fuel:2.2.1'
+
+    implementation "com.github.kittinunf.fuel:fuel:$fuelVersion"
+    implementation "com.github.kittinunf.fuel:fuel-coroutines:$fuelVersion"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation"
@@ -60,6 +66,11 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:2.0.1"
 
     implementation "androidx.paging:paging-runtime:$paging_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-simplexml:$retrofitVersion"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'

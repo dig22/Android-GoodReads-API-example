@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodreads.R
 import com.dig.goodreads.model.Book
-import kotlinx.android.synthetic.main.fragment_books.view.*
+import kotlinx.android.synthetic.main.fragment_books.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
@@ -34,17 +35,14 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
     var searchView  : SearchView? = null
 
-    var searchQuery : String =  "test"
+    var searchQuery : String =  "Game"
         get() {
             if(searchView == null || searchView?.query.isNullOrBlank() )
-                return "test"
+                return "Game"
             else{
                 return searchView?.query.toString()
             }
         }
-
-    lateinit var  recyclerBookList : RecyclerView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,33 +54,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         val thisFragmentLayout = inflater.inflate(R.layout.fragment_books, container, false)
-
-        manager = LinearLayoutManager(context)
-
-        recyclerBookList = thisFragmentLayout.recyclerBookList
-
-        recyclerBookList.layoutManager = manager
-
-
-
-        bookViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
-            this.books = it
-
-            val adapter = BookPagedListAdapter(this)
-            adapter.submitList(books)
-
-            recyclerBookList.itemAnimator = DefaultItemAnimator()
-            recyclerBookList.adapter = adapter
-            recyclerBookList.adapter?.notifyDataSetChanged()
-
-        })
-
-
-        bookViewModel.search("test")
-
         return thisFragmentLayout
     }
 
@@ -96,6 +68,76 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
             show()
         }
 
+        val adapter = BookPagedListAdapter(this)
+
+        manager = object : LinearLayoutManager(context) {
+            override fun onLayoutCompleted(state: RecyclerView.State?) {
+                super.onLayoutCompleted(state)
+                if(adapter.itemCount > 0)
+                isLoaded()
+            }
+        }
+        recyclerBookList.layoutManager = manager
+
+
+
+        recyclerBookList.itemAnimator = DefaultItemAnimator()
+        recyclerBookList.adapter = adapter
+
+        bookViewModel.publicState.observe(this, Observer<BooksState>{postState ->
+            if (postState == null) {
+                return@Observer
+            }
+
+            when(postState){
+                is BooksState.Startup ->{
+                    isLoading()
+                    bookViewModel.search("Game")
+                }
+                is BooksState.Error ->{
+                    isError()
+                }
+
+                is BooksState.Loading ->{
+                    isLoading()
+                }
+
+                is BooksState.BooksLoadedFromCache ->{
+                    isLoaded()
+                }
+            }
+
+        })
+
+        bookViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
+            this.books = it
+            adapter.submitList(books)
+            recyclerBookList.adapter?.notifyDataSetChanged()
+            //isLoaded()
+        })
+
+        bookFragmentReloadButton.onClick {
+            bookViewModel.search(searchQuery)
+        }
+
+    }
+
+    private fun isError(){
+        bookFragmentErrorView.visibility = View.VISIBLE
+        bookFragmentProgressBar.visibility = View.GONE
+        recyclerBookList.visibility = View.INVISIBLE
+    }
+
+    private fun isLoading(){
+        bookFragmentProgressBar.visibility = View.VISIBLE
+        bookFragmentErrorView.visibility = View.GONE
+        recyclerBookList.visibility = View.INVISIBLE
+    }
+
+    private fun isLoaded(){
+        bookFragmentProgressBar.visibility = View.GONE
+        bookFragmentErrorView.visibility = View.GONE
+        recyclerBookList.visibility = View.VISIBLE
     }
 
     override fun bookClicked(book: Book) {
@@ -116,7 +158,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
                 searchThrottle.removeCallbacksAndMessages(null)
 
                 searchThrottle.postDelayed({
-                    //TODO   progressBar.visibility = View.VISIBLE
+                    isLoading()
                     bookViewModel.search(searchQuery)
 
                 }, 500)

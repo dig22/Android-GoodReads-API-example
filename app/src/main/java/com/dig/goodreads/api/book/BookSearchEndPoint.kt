@@ -5,7 +5,7 @@ import com.dig.goodreads.constant.ApiGlobals
 import com.dig.goodreads.helper.ResponseConverter
 import com.dig.goodreads.model.Book
 import com.github.kittinunf.fuel.httpGet
-
+import com.github.kittinunf.result.Result
 
 open class BookSearchEndPoint {
 
@@ -17,40 +17,51 @@ open class BookSearchEndPoint {
         //Log.d(TAG, "URL : " +  url.toString())
 
         url.httpGet().responseString { request, response, result ->
-            var data =  ResponseConverter.XMLtoJSON(result.get())
 
-            val books = ArrayList<Book>()
+            when (result) {
 
-            var responseBooks = data?.getJSONObject("GoodreadsResponse")!!
-                .getJSONObject("search")
-                .getJSONObject("results")
-                .getJSONArray("work")
+                is Result.Failure -> {
+                   callback?.onFetchFailed("Error")
+                }
+                is Result.Success -> {
+                    var data =  ResponseConverter.XMLtoJSON(result.get())
+
+                    val books = ArrayList<Book>()
+
+                    var responseBooks = data?.getJSONObject("GoodreadsResponse")!!
+                        .getJSONObject("search")
+                        .getJSONObject("results")
+                        .getJSONArray("work")
 
 
 
-            for (i in 0 until responseBooks.length()) {
-                val item = responseBooks.getJSONObject(i)
+                    for (i in 0 until responseBooks.length()) {
+                        val item = responseBooks.getJSONObject(i)
 
-                val book = item.getJSONObject("best_book")
-                val id = book.getJSONObject("id").getInt("content")
-                val name = book.getString("title")
-                val imageUrl = book.getString("small_image_url")
-                val imageUrlLarge = book.getString("image_url")
+                        val book = item.getJSONObject("best_book")
+                        val id = book.getJSONObject("id").getInt("content")
+                        val name = book.getString("title")
+                        val imageUrl = book.getString("small_image_url")
+                        val imageUrlLarge = book.getString("image_url")
 
-                val authorId = book.getJSONObject("author")
-                    .getJSONObject("id").getInt("content")
+                        val authorId = book.getJSONObject("author")
+                            .getJSONObject("id").getInt("content")
+                        val authorName = book.getJSONObject("author")
+                            .getString("name")
 
-                books.add(Book(id,name,imageUrl,authorId,imageUrlLarge))
+                        books.add(Book(id,name,imageUrl,authorId,authorName,imageUrlLarge))
+                    }
+
+                    callback?.onFetchSuccess(books)
+                }
+
             }
-
-            callback?.onFetchSuccess(books)
-            //TODO handle Error
         }
 
     }
 
     interface Callback{
         fun onFetchSuccess(books: List<Book>)
-        fun onFetchFailed()
+        fun onFetchFailed(error : String)
     }
 }

@@ -1,8 +1,5 @@
 package com.dig.goodreads.components.details
 
-import com.dig.goodreads.components.book.BookSearchState
-import com.dig.goodreads.model.Book
-
 sealed class DetailsState {
     object Startup : DetailsState()
     object Loading : DetailsState()

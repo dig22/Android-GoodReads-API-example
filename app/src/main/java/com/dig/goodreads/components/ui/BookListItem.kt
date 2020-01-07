@@ -1,9 +1,10 @@
 package com.dig.goodreads.components.ui
 
 import android.content.Context
-import android.content.Intent
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.dig.goodreads.R
 import com.dig.goodreads.model.Book
@@ -29,6 +30,8 @@ class BookListItem : ConstraintLayout, View.OnClickListener {
     fun initData(book : Book){
         this.book = book
         bookItemName.setText(book.name)
+        bookItemAuthor.setText("by ${book.authorName}")
+        bookItemAuthor.movementMethod = ScrollingMovementMethod()
         Picasso.get().load(book.imageUrl).into(bookItemImage);
     }
 
@@ -41,20 +44,14 @@ class BookListItem : ConstraintLayout, View.OnClickListener {
     override fun onClick(v: View?) {
         listener?.OnBookListItemClicked(book)
     }
-    //TODO: Should Be send back to caller
-//    override fun onClick(v: View?) {
-//        val bookDetailIntent = Intent(context, BookDetailActivity::class.java)
-//        bookDetailIntent.putExtra("book", book) //Optional parameters
-//        context.startActivity(bookDetailIntent)
-//    }
-
-    fun registerListner(clickDelegate: ClickDelegate){
-        this.listener = clickDelegate
-    }
 
     interface ClickDelegate{
         fun OnBookListItemClicked(book : Book)
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        this.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+    }
 
 }
