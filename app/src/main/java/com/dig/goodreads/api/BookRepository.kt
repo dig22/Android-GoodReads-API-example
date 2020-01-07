@@ -1,7 +1,6 @@
 package com.dig.goodreads.api
 
 import com.dig.goodreads.BuildConfig
-import com.dig.goodreads.api.book.BookSearchEndPoint
 import com.dig.goodreads.model.Book
 import com.dig.goodreads.components.book.BooksState
 import com.dig.goodreads.components.details.DetailsState
@@ -14,17 +13,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class BookRepositoryImpl
-            constructor(val bookSearchEndPoint: BookSearchEndPoint,
-            private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default)
+            constructor(private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default)
             :BookRepository{
 
     val TAG ="BookProvider"
     val BOOK_DETAILS_API = "${ApiGlobals.GOOD_READS_HOME}book/isbn/"
     val SEARCH_API = "${ApiGlobals.GOOD_READS_HOME}search/index.xml?key=${BuildConfig.GOOD_READS_KEY}"
-
-    override fun searchBooks(searchString : String,page : Int,callback: BookSearchEndPoint.Callback?){
-        bookSearchEndPoint.searchBooks(searchString,page, callback )
-    }
 
     override suspend fun searchBooksNew(searchString : String,page : Int): BooksState = withContext(backgroundDispatcher){
         val url : String = "$SEARCH_API&q=$searchString&page=$page"
@@ -97,7 +91,6 @@ class BookRepositoryImpl
 }
 
 interface BookRepository {
-     fun searchBooks(searchString : String,page : Int = 1,callback: BookSearchEndPoint.Callback?)
      suspend fun getBookDescription(bookId: Int) : DetailsState
      suspend fun searchBooksNew(searchString : String,page : Int): BooksState
 }
