@@ -14,8 +14,8 @@ class BookRepositoryImpl constructor(val bookSearchEndPoint: BookSearchEndPoint,
         bookSearchEndPoint.searchBooks(searchString,page, callback )
     }
 
-    override fun getBookDescription(id : Int,callback: BookDetailEndPoint.Callback?){
-        bookDetailEndPoint.getDescription(id, callback)
+    override fun getBookDescription(bookId : Int,callback: BookDetailEndPoint.Callback?){
+        bookDetailEndPoint.getDescription(bookId, callback)
     }
 
 }

@@ -17,22 +17,10 @@ val dataSourceModule = module {
     val bookSearchEndPoint = BookSearchEndPoint()
 
     single { BookRepositoryImpl(bookSearchEndPoint,bookDetailEndPoint) as BookRepository }
-    single { BookDataSourceFactory(bookSearchEndPoint) }
+    single { BookDataSourceFactory(get()) }
 }
 
 val viewmodelModule = module {
-
-   // viewModel { BookViewModelDeprecated(get()) }
     viewModel { DetailsViewModel(get())}
     viewModel { BookViewModel(get()) }
-   // viewModel { CommentsViewModel(get()) }
 }
-
-//fun createBookDataSource() :  BookDataSource {
-//    val bookSearchEndPoint = BookSearchEndPoint()
-//    val bookDataSource  = BookDataSource(bookSearchEndPoint)
-//    val mutableLiveData = MutableLiveData<BookDataSource>()
-//    mutableLiveData.postValue(bookDataSource)
-//
-//    return bookDataSource
-//}

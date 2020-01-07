@@ -104,9 +104,9 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         val mSearchMenuItem: MenuItem = menu.findItem(R.id.appBarSearch)
-        val searchView = mSearchMenuItem.getActionView() as SearchView
+        searchView = mSearchMenuItem.getActionView() as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 bookViewModel.search(query.toString())
                 return false
@@ -117,7 +117,8 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
                 searchThrottle.postDelayed({
                     //TODO   progressBar.visibility = View.VISIBLE
-                    bookViewModel.search(newText.toString())
+                    bookViewModel.search(searchQuery)
+
                 }, 500)
 
                 return false

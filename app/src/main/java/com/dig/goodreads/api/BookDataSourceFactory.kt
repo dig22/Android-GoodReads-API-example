@@ -10,17 +10,17 @@ class BookDataSourceFactory : DataSource.Factory<Int, Book> {
 
     private val mutableLiveData: MutableLiveData<DataSource<Int, Book>>
     var bookDataSource: BookDataSource? = null
-    private val bookSearchEndPoint : BookSearchEndPoint
+    private val bookRepository : BookRepository
 
     lateinit var searchQuery : String
 
-    constructor(bookSearchEndPoint: BookSearchEndPoint) : super(){
-        this.bookSearchEndPoint = bookSearchEndPoint
+    constructor(bookRepository: BookRepository) : super(){
+        this.bookRepository = bookRepository
         mutableLiveData = MutableLiveData()
     }
 
     override fun create(): DataSource<Int, Book> {
-        bookDataSource =  BookDataSource(bookSearchEndPoint , searchQuery )
+        bookDataSource =  BookDataSource(bookRepository , searchQuery )
         mutableLiveData.postValue(bookDataSource)
         return bookDataSource!!
     }
