@@ -1,9 +1,10 @@
-package com.dig.goodReads.components.books
+package com.dig.goodReads.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.dig.goodReads.api.BookRepository
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.data.BookRepository
+import com.dig.goodReads.data.BooksDataSource
+import com.dig.goodReads.model.Book
 
 
 class BooksDataSourceFactory(private val bookRepository: BookRepository) : DataSource.Factory<Int, Book>() {

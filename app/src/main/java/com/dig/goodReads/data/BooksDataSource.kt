@@ -1,8 +1,8 @@
-package com.dig.goodReads.components.books
+package com.dig.goodReads.data
 
 import androidx.paging.PageKeyedDataSource
-import com.dig.goodReads.api.BookRepository
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.components.books.BooksState
+import com.dig.goodReads.model.Book
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext

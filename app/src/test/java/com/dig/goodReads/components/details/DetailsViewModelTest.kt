@@ -1,11 +1,13 @@
-package com.dig.goodReads
+package com.dig.goodReads.components.details
 
-import com.dig.goodReads.api.BookRepository
-import com.dig.goodReads.components.details.DetailsState
-import com.dig.goodReads.components.details.DetailsViewModel
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.BaseTestClass
+import com.dig.goodReads.BookRepositoryImplTD
+import com.dig.goodReads.TEST_ERROR
+import com.dig.goodReads.data.BookRepository
+import com.dig.goodReads.model.Book
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.get
@@ -26,6 +28,13 @@ class DetailsViewModelTest : BaseTestClass() {
 
         book =
             Book(1, "testName", "", 0, "testAuthor")
+    }
+
+    @After
+    override fun after(){
+        super.after()
+
+        //detailsViewModel.
     }
 
     @Test

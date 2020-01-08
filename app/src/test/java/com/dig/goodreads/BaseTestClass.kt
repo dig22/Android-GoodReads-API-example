@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.koin.android.ext.koin.androidContext
@@ -22,8 +23,13 @@ import org.mockito.junit.MockitoJUnitRunner
 //import org.mockito.junit.MockitoJUnitRunner
 
 const val TEST_ERROR = "TestError"
-const val TEST_SEARCH = "TestSearch"
+const val TEST_SEARCH = "Game"
+const val TEST_BOOK_ID = 375802
 
+const val TEST_SEARCH_WRONG = "/page/&q="
+const val TEST_BOOK_ID_WRONG = 1010101010
+
+@Ignore
 @RunWith(MockitoJUnitRunner::class)
 open class BaseTestClass : KoinTest{
 

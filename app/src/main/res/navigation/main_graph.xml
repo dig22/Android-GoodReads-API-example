@@ -21,6 +21,6 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="book"
-            app:argType="com.dig.goodReads.api.model.Book" />
+            app:argType="com.dig.goodReads.model.Book" />
     </fragment>
 </navigation>

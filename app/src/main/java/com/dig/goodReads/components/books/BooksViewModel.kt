@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.data.BooksDataSource
+import com.dig.goodReads.data.BooksDataSourceFactory
+import com.dig.goodReads.model.Book
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

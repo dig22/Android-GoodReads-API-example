@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodReads.components.ui.BookListItem
 import com.dig.goodReads.components.ui.BookListProgressBar
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.model.Book
 
-private const val TYPE_BOOK_ITEM = 1
-private const val TYPE_PROGRESS_BAR = 2
+
 
 class BooksPagedListAdapter(private val bookClickListener: OnBookClickListener?) : PagedListAdapter<Book,BooksPagedListAdapter.BookViewHolder>(BookDiffCallback){
 
+    private val TYPE_BOOK_ITEM = 1
+    private val TYPE_PROGRESS_BAR = 2
 
     override fun getItemViewType(position: Int): Int {
         if(position == itemCount -1){
@@ -47,7 +48,7 @@ class BooksPagedListAdapter(private val bookClickListener: OnBookClickListener?)
             }
 
             override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }

@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dig.goodReads.R
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.model.Book
 import kotlinx.android.synthetic.main.fragment_books.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
-private const val TAG = "BooksFragment"
-private const val DEFAULT_SEARCH = "Game"
+
+
 class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, KoinComponent{
+
+    private  val DEFAULT_SEARCH = "Game"
 
     private val booksViewModel : BooksViewModel by viewModel()
 

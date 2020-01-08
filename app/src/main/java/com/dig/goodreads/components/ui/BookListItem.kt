@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.dig.goodReads.R
-import com.dig.goodReads.api.model.Book
+import com.dig.goodReads.model.Book
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_book_list_item.view.*
 

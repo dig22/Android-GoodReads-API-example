@@ -1,8 +1,8 @@
 package com.dig.goodReads
 
-import com.dig.goodReads.components.books.BooksDataSourceFactory
-import com.dig.goodReads.api.BookRepository
-import com.dig.goodReads.api.BookRepositoryImpl
+import com.dig.goodReads.data.BooksDataSourceFactory
+import com.dig.goodReads.data.BookRepository
+import com.dig.goodReads.data.BookRepositoryImpl
 import com.dig.goodReads.components.books.BooksViewModel
 import com.dig.goodReads.components.details.DetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

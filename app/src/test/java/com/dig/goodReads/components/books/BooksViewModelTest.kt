@@ -1,9 +1,9 @@
-package com.dig.goodReads
+package com.dig.goodReads.components.books
 
-import com.dig.goodReads.api.BookRepository
-import com.dig.goodReads.components.books.BooksDataSourceFactory
-import com.dig.goodReads.components.books.BooksState
-import com.dig.goodReads.components.books.BooksViewModel
+import com.dig.goodReads.BaseTestClass
+import com.dig.goodReads.TEST_SEARCH
+import com.dig.goodReads.data.BookRepository
+import com.dig.goodReads.data.BooksDataSourceFactory
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
