@@ -1,20 +1,15 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.components.book.BooksDataSourceFactory
-import com.dig.goodreads.components.book.BooksState
-import com.dig.goodreads.components.book.BooksViewModel
-import com.nhaarman.mockitokotlin2.verifyBlocking
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.components.books.BooksDataSourceFactory
+import com.dig.goodReads.components.books.BooksState
+import com.dig.goodReads.components.books.BooksViewModel
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.any
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.get
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito.anyString
-import org.mockito.Mockito.verify
 
 class BooksViewModelTest :  BaseTestClass() {
 
@@ -36,8 +31,7 @@ class BooksViewModelTest :  BaseTestClass() {
         assert(booksViewModel.booksLiveData.value == BooksState.Startup)
         booksViewModel.search(TEST_SEARCH)
         return runBlocking {
-            val value = booksViewModel.booksLiveData.value
-               when(value){
+               when( booksViewModel.booksLiveData.value){
                 is BooksState.Loading ->{
                     print("Tested Search")
                 }

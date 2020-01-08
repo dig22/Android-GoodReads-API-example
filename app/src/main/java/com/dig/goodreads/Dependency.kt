@@ -1,10 +1,10 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
-import com.dig.goodreads.components.book.BooksDataSourceFactory
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.api.BookRepositoryImpl
-import com.dig.goodreads.components.book.BooksViewModel
-import com.dig.goodreads.components.details.DetailsViewModel
+import com.dig.goodReads.components.books.BooksDataSourceFactory
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.api.BookRepositoryImpl
+import com.dig.goodReads.components.books.BooksViewModel
+import com.dig.goodReads.components.details.DetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -14,7 +14,7 @@ val dataSourceModule = module {
     single { BooksDataSourceFactory(get()) }
 }
 
-val viewmodelModule = module {
+val viewModelModule = module {
     viewModel { DetailsViewModel(get())}
     viewModel { BooksViewModel(get()) }
 }

@@ -1,4 +1,4 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
 import org.junit.Test
 

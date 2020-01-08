@@ -1,4 +1,4 @@
-package com.dig.goodreads.model
+package com.dig.goodReads.api.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -12,4 +12,20 @@ class Book (val id : Int,
             var ImageUrlLarge : String? = null,
             var details : String? = null
             ) : Parcelable {
+
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Book
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
 }

@@ -1,15 +1,15 @@
-package com.dig.goodreads.components.book
+package com.dig.goodReads.components.books
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.model.Book
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class BooksViewModel : ViewModel , BooksDataSource.ErrorListner  {
+class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel() , BooksDataSource.ErrorListener  {
 
     private var booksPagedList: LiveData<PagedList<Book>>? = null
 
@@ -18,33 +18,27 @@ class BooksViewModel : ViewModel , BooksDataSource.ErrorListner  {
     val booksLiveData: LiveData<BooksState>
         get() = privateState
 
-    val factory : BooksDataSourceFactory
+    private val factory : BooksDataSourceFactory = booksDataSourceFactory
 
-    val config : PagedList.Config
+    private val config : PagedList.Config = PagedList.Config.Builder()
+        .setEnablePlaceholders(true)
+        .setInitialLoadSizeHint(10)
+        .setPageSize(20)
+        .setPrefetchDistance(20)
+        .build()
 
-    val executor : ExecutorService
+    private val executor : ExecutorService = Executors.newFixedThreadPool(5)
 
-    var searchQueryCache : String  = ""
+    private var searchQueryCache : String  = ""
 
+    init {
 
-    constructor(booksDataSourceFactory: BooksDataSourceFactory) : super(){
-        this.factory = booksDataSourceFactory
-
-         config =  PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(20)
-            .setPrefetchDistance(20)
-            .build()
-
-        executor = Executors.newFixedThreadPool(5)
-        factory.dataSourceErrorListner = this
+        factory.dataSourceErrorListener = this
         booksPagedList = LivePagedListBuilder<Int, Book>(factory,config)
             .setFetchExecutor(executor)
             .build()
 
         privateState.postValue(BooksState.Startup)
-
     }
 
     fun search(searchQuery :String) {
@@ -58,7 +52,7 @@ class BooksViewModel : ViewModel , BooksDataSource.ErrorListner  {
         }
 
         factory.searchQuery = searchQuery
-        factory.booksDataSource?.invalidate();
+        factory.booksDataSource?.invalidate()
         searchQueryCache = searchQuery
     }
 

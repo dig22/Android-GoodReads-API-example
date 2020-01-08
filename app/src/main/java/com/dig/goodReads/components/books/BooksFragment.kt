@@ -1,4 +1,4 @@
-package com.dig.goodreads.components.book
+package com.dig.goodReads.components.books
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,41 +12,22 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dig.goodreads.R
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.R
+import com.dig.goodReads.api.model.Book
 import kotlinx.android.synthetic.main.fragment_books.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
-
+private const val TAG = "BooksFragment"
+private const val DEFAULT_SEARCH = "Game"
 class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, KoinComponent{
 
-    val TAG = "BooksFragment"
-
-    val booksViewModel : BooksViewModel by viewModel()
-
-    lateinit var manager : LinearLayoutManager
-    var searchThrottle = Handler()
-
-    var books : PagedList<Book>?  = null
-
-
-
-    var searchView  : SearchView? = null
-
-    var searchQuery : String =  "Game"
-        get() {
-            if(searchView == null || searchView?.query.isNullOrBlank() )
-                return "Game"
-            else{
-                return searchView?.query.toString()
-            }
-        }
+    private val booksViewModel : BooksViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
 
     }
 
@@ -54,8 +35,7 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val thisFragmentLayout = inflater.inflate(R.layout.fragment_books, container, false)
-        return thisFragmentLayout
+        return inflater.inflate(R.layout.fragment_books, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -70,7 +50,7 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
 
         val adapter = BooksPagedListAdapter(this)
 
-        manager = object : LinearLayoutManager(context) {
+        val manager = object : LinearLayoutManager(context) {
             override fun onLayoutCompleted(state: RecyclerView.State?) {
                 super.onLayoutCompleted(state)
                 if(adapter.itemCount > 0)
@@ -109,17 +89,14 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
 
         })
 
+        var books : PagedList<Book>
+
         booksViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
-            this.books = it
+            books = it
             adapter.submitList(books)
             recyclerBookList.adapter?.notifyDataSetChanged()
             //isLoaded()
         })
-
-        bookFragmentReloadButton.onClick {
-            booksViewModel.search(searchQuery)
-        }
-
     }
 
     private fun isError(){
@@ -146,9 +123,15 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         val mSearchMenuItem: MenuItem = menu.findItem(R.id.appBarSearch)
-        searchView = mSearchMenuItem.getActionView() as SearchView
+        val searchView = mSearchMenuItem.actionView as SearchView
 
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        bookFragmentReloadButton.onClick {
+            booksViewModel.search(searchView.query.toString())
+        }
+
+        val searchThrottle = Handler()
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 booksViewModel.search(query.toString())
                 return false
@@ -159,7 +142,12 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
 
                 searchThrottle.postDelayed({
                     isLoading()
-                    booksViewModel.search(searchQuery)
+
+                    if( searchView.query.isNullOrBlank()){
+                        booksViewModel.search(DEFAULT_SEARCH)
+                    }else{
+                        booksViewModel.search(newText!!)
+                    }
 
                 }, 500)
 
@@ -170,7 +158,7 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
     }
 
     override fun onCreateOptionsMenu(menu: Menu ,   inflater : MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
     }
 

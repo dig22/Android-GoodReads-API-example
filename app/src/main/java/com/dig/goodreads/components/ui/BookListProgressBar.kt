@@ -1,15 +1,14 @@
-package com.dig.goodreads.components.ui
+package com.dig.goodReads.components.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.dig.goodreads.R
+import com.dig.goodReads.R
 
-class BookListProgressBar : ConstraintLayout{
+class BookListProgressBar(context: Context) : ConstraintLayout(context){
 
-    constructor(context: Context) :   super(context){
+    init {
         LayoutInflater.from(context).inflate(R.layout.view_book_list_progress_bar, this, true)
     }
 

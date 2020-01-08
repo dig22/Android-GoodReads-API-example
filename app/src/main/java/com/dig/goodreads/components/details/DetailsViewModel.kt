@@ -1,10 +1,10 @@
-package com.dig.goodreads.components.details
+package com.dig.goodReads.components.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.helper.CouroutineViewModel
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.helper.CoroutineViewModel
+import com.dig.goodReads.api.model.Book
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
 
 class DetailsViewModel (private val bookRepository : BookRepository,
                         uiContext: CoroutineContext = Dispatchers.Main) :
-    KoinComponent,  CouroutineViewModel(uiContext) {
+    KoinComponent,  CoroutineViewModel(uiContext) {
 
     private val privateState = MutableLiveData<DetailsState>()
 

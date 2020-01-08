@@ -1,4 +1,4 @@
-package com.dig.goodreads.components.ui
+package com.dig.goodReads.components.ui
 
 import android.content.Context
 import android.text.method.ScrollingMovementMethod
@@ -6,47 +6,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.dig.goodreads.R
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.R
+import com.dig.goodReads.api.model.Book
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_book_list_item.view.*
 
 
-class BookListItem : ConstraintLayout, View.OnClickListener {
+class BookListItem(context: Context) : ConstraintLayout(context), View.OnClickListener {
 
     lateinit var book : Book
 
-    var listener : ClickDelegate? = null
+    private var listener : ClickDelegate? = null
 
-    constructor(context: Context?) : super(context){
+    init {
         initView()
-    }
-
-
-    constructor(context: Context?, book : Book) : this(context){
-        initData(book)
     }
 
     fun initData(book : Book){
         this.book = book
         bookItemName.text = book.name
-        bookItemAuthor.text = "by ${book.authorName}"
+        bookItemAuthor.text = resources.getText(R.string.byAuthor,book.authorName)
         bookItemAuthor.movementMethod = ScrollingMovementMethod()
-        Picasso.get().load(book.imageUrl).into(bookItemImage);
+        Picasso.get().load(book.imageUrl).into(bookItemImage)
     }
 
     private fun initView() {
-        LayoutInflater.from(context).inflate(R.layout.view_book_list_item, this, true);
+        LayoutInflater.from(context).inflate(R.layout.view_book_list_item, this, true)
     }
 
 
 
     override fun onClick(v: View?) {
-        listener?.OnBookListItemClicked(book)
+        listener?.onBookListItemClicked(book)
     }
 
     interface ClickDelegate{
-        fun OnBookListItemClicked(book : Book)
+        fun onBookListItemClicked(book : Book)
     }
 
     override fun onAttachedToWindow() {

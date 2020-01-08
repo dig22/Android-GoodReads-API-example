@@ -1,9 +1,9 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.components.details.DetailsState
-import com.dig.goodreads.components.details.DetailsViewModel
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.components.details.DetailsState
+import com.dig.goodReads.components.details.DetailsViewModel
+import com.dig.goodReads.api.model.Book
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -24,7 +24,8 @@ class DetailsViewModelTest : BaseTestClass() {
         bookRepository = get()
         detailsViewModel = get()
 
-        book = Book(1,"testName","",0,"testAuthor")
+        book =
+            Book(1, "testName", "", 0, "testAuthor")
     }
 
     @Test
@@ -98,7 +99,7 @@ class DetailsViewModelTest : BaseTestClass() {
             assert(detailsViewModel.detailsLiveData.value == DetailsState.Startup)
 
             detailsViewModel.fetchDetails(book).join()
-            val newBook = Book(2,"","",2,"")
+            val newBook = Book(2, "", "", 2, "")
             detailsViewModel.fetchDetails(newBook).join()
 
             val value = detailsViewModel.detailsLiveData.value

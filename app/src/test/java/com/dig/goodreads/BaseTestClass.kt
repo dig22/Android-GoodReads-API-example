@@ -1,4 +1,4 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -39,7 +39,7 @@ open class BaseTestClass : KoinTest{
         Dispatchers.setMain(Dispatchers.Unconfined)
         startKoin {
             androidContext(application)
-            modules(listOf(dataSourceModuleTD, viewmodelModuleTD))
+            modules(listOf(dataSourceModuleTD, viewModelModuleTD))
         }
     }
 

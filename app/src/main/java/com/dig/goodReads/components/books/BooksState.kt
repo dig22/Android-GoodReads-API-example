@@ -1,6 +1,6 @@
-package com.dig.goodreads.components.book
+package com.dig.goodReads.components.books
 
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.model.Book
 
 sealed class BooksState {
     object Startup : BooksState()

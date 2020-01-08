@@ -1,4 +1,4 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +12,7 @@ class App : Application() {
         Timber.plant(Timber.DebugTree())
         startKoin {
             androidContext(this@App)
-            modules(listOf(dataSourceModule,viewmodelModule))
+            modules(listOf(dataSourceModule,viewModelModule))
         }
     }
 }

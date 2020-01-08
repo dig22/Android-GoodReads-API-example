@@ -1,16 +1,16 @@
-package com.dig.goodreads.components.book
+package com.dig.goodReads.components.books
 
 import androidx.paging.PageKeyedDataSource
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.api.model.Book
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 
-class BooksDataSource (val bookRepository: BookRepository,
-                       var searchQuery : String,
-                       var errorListner : ErrorListner?,
-                       val scope: CoroutineScope = CoroutineScope(newSingleThreadContext("BookDataSource"))
+class BooksDataSource (private val bookRepository: BookRepository,
+                       private var searchQuery : String,
+                       private var errorListener : ErrorListener?,
+                       private val scope: CoroutineScope = CoroutineScope(newSingleThreadContext("BookDataSource"))
 ) :  PageKeyedDataSource<Int, Book>() {
 
    // var searchQuery : String = "test"
@@ -27,7 +27,7 @@ class BooksDataSource (val bookRepository: BookRepository,
                         callback.onResult(books,null,2)
                     }
                     is BooksState.Error ->{
-                        errorListner?.onError(this.message!!)
+                        errorListener?.onError(this.message!!)
                     }
                 }
             }
@@ -44,7 +44,7 @@ class BooksDataSource (val bookRepository: BookRepository,
                         callback.onResult(books, params.key+1)
                     }
                     is BooksState.Error ->{
-                        errorListner?.onError(this.message!!)
+                        errorListener?.onError(this.message!!)
                     }
                 }
             }
@@ -55,7 +55,7 @@ class BooksDataSource (val bookRepository: BookRepository,
        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    interface ErrorListner{
+    interface ErrorListener{
         fun onError(error : String)
     }
 }

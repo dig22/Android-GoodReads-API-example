@@ -1,35 +1,31 @@
-package com.dig.goodreads.components.book
+package com.dig.goodReads.components.books
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.dig.goodreads.components.ui.BookListItem
-import com.dig.goodreads.components.ui.BookListProgressBar
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.components.ui.BookListItem
+import com.dig.goodReads.components.ui.BookListProgressBar
+import com.dig.goodReads.api.model.Book
 
-class BooksPagedListAdapter(val bookClickListener: OnBookClickListener?) : PagedListAdapter<Book,BooksPagedListAdapter.BookViewHolder>(BookDiffCallback){
+private const val TYPE_BOOK_ITEM = 1
+private const val TYPE_PROGRESS_BAR = 2
 
+class BooksPagedListAdapter(private val bookClickListener: OnBookClickListener?) : PagedListAdapter<Book,BooksPagedListAdapter.BookViewHolder>(BookDiffCallback){
 
-    private val TYPE_BOOK_ITEM = 1
-    private val TYPE_PROGRESS_BAR = 2
 
     override fun getItemViewType(position: Int): Int {
-        if(position == getItemCount()-1){
+        if(position == itemCount -1){
             return TYPE_PROGRESS_BAR
         }
         return  TYPE_BOOK_ITEM
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        when(viewType){
-            TYPE_PROGRESS_BAR -> return BookViewHolder(
-                BookListProgressBar(parent.context)
-            )
-            else ->  return BookViewHolder(
-                BookListItem(parent.context)
-            )
+        return when(viewType){
+            TYPE_PROGRESS_BAR -> BookViewHolder(BookListProgressBar(parent.context))
+            else -> BookViewHolder(BookListItem(parent.context))
         }
     }
 
@@ -57,9 +53,7 @@ class BooksPagedListAdapter(val bookClickListener: OnBookClickListener?) : Paged
     }
 
 
-    class BookViewHolder(val view : View) : RecyclerView.ViewHolder(view){
-
-    }
+    class BookViewHolder(val view : View) : RecyclerView.ViewHolder(view)
 
     interface OnBookClickListener {
         fun bookClicked(book: Book)

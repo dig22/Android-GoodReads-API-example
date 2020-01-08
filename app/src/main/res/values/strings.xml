@@ -8,5 +8,7 @@
     <string name="books">Books</string>
     <string name="image_content_description">Book Image</string>
     <string name="reload">Reload</string>
+    <string name="search">Search</string>
+    <string name="byAuthor">by %1$s</string>
 
 </resources>

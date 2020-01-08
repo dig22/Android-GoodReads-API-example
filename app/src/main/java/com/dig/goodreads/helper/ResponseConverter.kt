@@ -1,16 +1,16 @@
-package com.dig.goodreads.helper
+package com.dig.goodReads.helper
 
 import fr.arnaudguyon.xmltojsonlib.XmlToJson
 import org.json.JSONObject
 import org.jsoup.Jsoup
 
 object ResponseConverter {
-   fun XMLtoJSON(xml : String) : JSONObject?{
+   fun xmlToJson(xml : String) : JSONObject?{
        val xmlToJson = XmlToJson.Builder(xml).build()
-       return xmlToJson.toJson();
+       return xmlToJson.toJson()
     }
 
-    fun HTML2Text(html: String): String {
+    fun htmlToText(html: String): String {
         return Jsoup.parse(html).text()
     }
 }

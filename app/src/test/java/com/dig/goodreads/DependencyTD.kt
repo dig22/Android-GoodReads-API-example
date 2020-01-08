@@ -1,13 +1,12 @@
-package com.dig.goodreads
+package com.dig.goodReads
 
-import com.dig.goodreads.api.BookRepository
-import com.dig.goodreads.api.BookRepositoryImpl
-import com.dig.goodreads.components.book.BooksDataSourceFactory
-import com.dig.goodreads.components.book.BooksState
-import com.dig.goodreads.components.book.BooksViewModel
-import com.dig.goodreads.components.details.DetailsState
-import com.dig.goodreads.components.details.DetailsViewModel
-import com.dig.goodreads.model.Book
+import com.dig.goodReads.api.BookRepository
+import com.dig.goodReads.components.books.BooksDataSourceFactory
+import com.dig.goodReads.components.books.BooksState
+import com.dig.goodReads.components.books.BooksViewModel
+import com.dig.goodReads.components.details.DetailsState
+import com.dig.goodReads.components.details.DetailsViewModel
+import com.dig.goodReads.api.model.Book
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -17,7 +16,7 @@ val dataSourceModuleTD = module {
     single { BooksDataSourceFactory(get()) }
 }
 
-val viewmodelModuleTD = module {
+val viewModelModuleTD = module {
     viewModel { DetailsViewModel(get()) }
     viewModel { BooksViewModel(get()) }
 }
@@ -27,9 +26,8 @@ class BookRepositoryImplTD : BookRepository{
 
     var isError = false
     var books : ArrayList<Book> = ArrayList(listOf(
-        Book(1,"TestName","",0,"")
+        Book(1, "TestName", "", 0, "")
     ))
-
 
     override suspend fun getBookDescription(bookId: Int): DetailsState {
 

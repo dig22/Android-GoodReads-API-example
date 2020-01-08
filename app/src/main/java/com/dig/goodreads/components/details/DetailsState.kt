@@ -1,4 +1,4 @@
-package com.dig.goodreads.components.details
+package com.dig.goodReads.components.details
 
 sealed class DetailsState {
     object Startup : DetailsState()
