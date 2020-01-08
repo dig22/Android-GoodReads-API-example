@@ -25,7 +25,7 @@ class BookListItem(context: Context) : ConstraintLayout(context), View.OnClickLi
     fun initData(book : Book){
         this.book = book
         bookItemName.text = book.name
-        bookItemAuthor.text = resources.getText(R.string.byAuthor,book.authorName)
+        bookItemAuthor.text = resources.getString(R.string.byAuthor,book.authorName)
         bookItemAuthor.movementMethod = ScrollingMovementMethod()
         Picasso.get().load(book.imageUrl).into(bookItemImage)
     }
