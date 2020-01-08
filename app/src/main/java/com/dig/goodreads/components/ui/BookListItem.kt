@@ -29,8 +29,8 @@ class BookListItem : ConstraintLayout, View.OnClickListener {
 
     fun initData(book : Book){
         this.book = book
-        bookItemName.setText(book.name)
-        bookItemAuthor.setText("by ${book.authorName}")
+        bookItemName.text = book.name
+        bookItemAuthor.text = "by ${book.authorName}"
         bookItemAuthor.movementMethod = ScrollingMovementMethod()
         Picasso.get().load(book.imageUrl).into(bookItemImage);
     }

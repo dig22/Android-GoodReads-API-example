@@ -17,7 +17,7 @@ class DetailsViewModel (private val bookRepository : BookRepository,
     private val privateState = MutableLiveData<DetailsState>()
 
 
-    val postLiveData : LiveData<DetailsState>
+    val detailsLiveData : LiveData<DetailsState>
         get() = privateState
 
     init {
@@ -27,7 +27,7 @@ class DetailsViewModel (private val bookRepository : BookRepository,
 
     fun fetchDetails(book : Book) = launch {
         if(book.details != null){
-            privateState.value = DetailsState.DetailsLoaded(book.details!!)
+            privateState.value = DetailsState.DetailsLoadedFromCache(book.details!!)
             return@launch
         }
         privateState.value = DetailsState.Loading

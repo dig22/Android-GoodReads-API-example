@@ -5,4 +5,5 @@ sealed class DetailsState {
     object Loading : DetailsState()
     data class Error(val message: String?) : DetailsState()
     data class DetailsLoaded(val details: String) : DetailsState()
+    data class DetailsLoadedFromCache(val details: String) : DetailsState()
 }

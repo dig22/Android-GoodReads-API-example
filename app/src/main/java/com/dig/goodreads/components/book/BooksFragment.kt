@@ -20,11 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 
-class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, KoinComponent{
+class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, KoinComponent{
 
     val TAG = "BooksFragment"
 
-    val bookViewModel : BookViewModel by viewModel()
+    val booksViewModel : BooksViewModel by viewModel()
 
     lateinit var manager : LinearLayoutManager
     var searchThrottle = Handler()
@@ -68,7 +68,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
             show()
         }
 
-        val adapter = BookPagedListAdapter(this)
+        val adapter = BooksPagedListAdapter(this)
 
         manager = object : LinearLayoutManager(context) {
             override fun onLayoutCompleted(state: RecyclerView.State?) {
@@ -84,7 +84,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
         recyclerBookList.itemAnimator = DefaultItemAnimator()
         recyclerBookList.adapter = adapter
 
-        bookViewModel.publicState.observe(this, Observer<BooksState>{postState ->
+        booksViewModel.booksLiveData.observe(this, Observer<BooksState>{ postState ->
             if (postState == null) {
                 return@Observer
             }
@@ -92,7 +92,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
             when(postState){
                 is BooksState.Startup ->{
                     isLoading()
-                    bookViewModel.search("Game")
+                    booksViewModel.search("Game")
                 }
                 is BooksState.Error ->{
                     isError()
@@ -109,7 +109,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
         })
 
-        bookViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
+        booksViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
             this.books = it
             adapter.submitList(books)
             recyclerBookList.adapter?.notifyDataSetChanged()
@@ -117,7 +117,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
         })
 
         bookFragmentReloadButton.onClick {
-            bookViewModel.search(searchQuery)
+            booksViewModel.search(searchQuery)
         }
 
     }
@@ -150,7 +150,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                bookViewModel.search(query.toString())
+                booksViewModel.search(query.toString())
                 return false
             }
 
@@ -159,7 +159,7 @@ class BooksFragment : Fragment() , BookPagedListAdapter.OnBookClickListener, Koi
 
                 searchThrottle.postDelayed({
                     isLoading()
-                    bookViewModel.search(searchQuery)
+                    booksViewModel.search(searchQuery)
 
                 }, 500)
 

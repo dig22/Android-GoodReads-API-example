@@ -9,16 +9,16 @@ import com.dig.goodreads.model.Book
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class BookViewModel : ViewModel , BookDataSource.ErrorListner  {
+class BooksViewModel : ViewModel , BooksDataSource.ErrorListner  {
 
     private var booksPagedList: LiveData<PagedList<Book>>? = null
 
     private var privateState = MutableLiveData<BooksState>()
 
-    val publicState: LiveData<BooksState>
+    val booksLiveData: LiveData<BooksState>
         get() = privateState
 
-    val factory : BookDataSourceFactory
+    val factory : BooksDataSourceFactory
 
     val config : PagedList.Config
 
@@ -27,8 +27,8 @@ class BookViewModel : ViewModel , BookDataSource.ErrorListner  {
     var searchQueryCache : String  = ""
 
 
-    constructor(bookDataSourceFactory: BookDataSourceFactory) : super(){
-        this.factory = bookDataSourceFactory
+    constructor(booksDataSourceFactory: BooksDataSourceFactory) : super(){
+        this.factory = booksDataSourceFactory
 
          config =  PagedList.Config.Builder()
             .setEnablePlaceholders(true)
@@ -58,7 +58,7 @@ class BookViewModel : ViewModel , BookDataSource.ErrorListner  {
         }
 
         factory.searchQuery = searchQuery
-        factory.bookDataSource?.invalidate();
+        factory.booksDataSource?.invalidate();
         searchQueryCache = searchQuery
     }
 

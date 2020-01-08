@@ -49,26 +49,33 @@ class DetailsFragment : Fragment() , KoinComponent {
         Picasso.get().load(this.book.ImageUrlLarge).into(thisFragmentLayout.bookDetailBookImage)
         thisFragmentLayout.bookDetailBookTitle.setText(book.name)
 
-        detailsViewModel.postLiveData.observe(this, Observer<DetailsState> { postState ->
+        detailsViewModel.detailsLiveData.observe(this, Observer<DetailsState> { detailsState ->
 
-            if (postState == null) {
+            if (detailsState == null) {
                 return@Observer
             }
 
-            when (postState) {
+            when (detailsState) {
                 //TODO : Other States
                 is DetailsState.Startup -> {
                     bookDetailsProgressBar.visibility = View.VISIBLE
                     detailsViewModel.fetchDetails(book)
                 }
                 is DetailsState.DetailsLoaded ->{
-                    bookDetailsProgressBar.visibility = View.GONE
-                    this.bookDetailBookDescription.setText(postState.details)
+                    detailsLoaded(detailsState.details)
+                }
+                is DetailsState.DetailsLoadedFromCache ->{
+                    detailsLoaded(detailsState.details)
                 }
             }
         })
 
         return thisFragmentLayout
+    }
+
+    fun detailsLoaded(details : String){
+        bookDetailsProgressBar.visibility = View.GONE
+        this.bookDetailBookDescription.setText(details)
     }
 
     private fun fetchAndCacheDescription(book: Book) {

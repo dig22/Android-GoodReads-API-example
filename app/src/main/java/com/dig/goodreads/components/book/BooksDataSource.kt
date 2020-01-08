@@ -7,10 +7,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 
-class BookDataSource (val bookRepository: BookRepository,
-                      var searchQuery : String,
-                      var errorListner : ErrorListner?,
-                      val scope: CoroutineScope = CoroutineScope(newSingleThreadContext("BookDataSource"))
+class BooksDataSource (val bookRepository: BookRepository,
+                       var searchQuery : String,
+                       var errorListner : ErrorListner?,
+                       val scope: CoroutineScope = CoroutineScope(newSingleThreadContext("BookDataSource"))
 ) :  PageKeyedDataSource<Int, Book>() {
 
    // var searchQuery : String = "test"

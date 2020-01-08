@@ -9,7 +9,7 @@ import com.dig.goodreads.components.ui.BookListItem
 import com.dig.goodreads.components.ui.BookListProgressBar
 import com.dig.goodreads.model.Book
 
-class BookPagedListAdapter(val bookClickListener: OnBookClickListener) : PagedListAdapter<Book,BookPagedListAdapter.BookViewHolder>(BookDiffCallback){
+class BooksPagedListAdapter(val bookClickListener: OnBookClickListener?) : PagedListAdapter<Book,BooksPagedListAdapter.BookViewHolder>(BookDiffCallback){
 
 
     private val TYPE_BOOK_ITEM = 1
@@ -39,7 +39,7 @@ class BookPagedListAdapter(val bookClickListener: OnBookClickListener) : PagedLi
         val book =  getItem(position)
         (holder.view as BookListItem).initData(book!!)
         holder.view.setOnClickListener{
-            bookClickListener.bookClicked(book)
+            bookClickListener?.bookClicked(book)
         }
     }
 

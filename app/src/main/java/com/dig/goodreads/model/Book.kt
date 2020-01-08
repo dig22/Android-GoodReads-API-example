@@ -12,6 +12,4 @@ class Book (val id : Int,
             var ImageUrlLarge : String? = null,
             var details : String? = null
             ) : Parcelable {
-
-
 }

@@ -6,15 +6,15 @@ import com.dig.goodreads.api.BookRepository
 import com.dig.goodreads.model.Book
 
 
-class BookDataSourceFactory : DataSource.Factory<Int, Book> {
+class BooksDataSourceFactory : DataSource.Factory<Int, Book> {
 
     private val mutableLiveData: MutableLiveData<DataSource<Int, Book>>
-    var bookDataSource: BookDataSource? = null
+    var booksDataSource: BooksDataSource? = null
     private val bookRepository : BookRepository
 
     var searchQuery : String = "Game"
 
-    var dataSourceErrorListner : BookDataSource.ErrorListner? = null
+    var dataSourceErrorListner : BooksDataSource.ErrorListner? = null
 
 
     constructor(bookRepository: BookRepository) : super(){
@@ -23,13 +23,13 @@ class BookDataSourceFactory : DataSource.Factory<Int, Book> {
     }
 
     override fun create(): DataSource<Int, Book> {
-        bookDataSource = BookDataSource(
+        booksDataSource = BooksDataSource(
             bookRepository,
             searchQuery,
             dataSourceErrorListner
         )
-        mutableLiveData.postValue(bookDataSource)
-        return bookDataSource!!
+        mutableLiveData.postValue(booksDataSource)
+        return booksDataSource!!
     }
 
 
