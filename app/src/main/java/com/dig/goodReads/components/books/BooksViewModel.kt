@@ -29,15 +29,12 @@ class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel
         .setPrefetchDistance(20)
         .build()
 
-    private val executor : ExecutorService = Executors.newFixedThreadPool(5)
-
     private var searchQueryCache : String  = ""
 
     init {
 
         factory.dataSourceErrorListener = this
         booksPagedList = LivePagedListBuilder<Int, Book>(factory,config)
-            .setFetchExecutor(executor)
             .build()
 
         privateState.postValue(BooksState.Startup)
