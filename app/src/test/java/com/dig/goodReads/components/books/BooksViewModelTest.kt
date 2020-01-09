@@ -10,12 +10,17 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.get
+import org.mockito.Mock
 
 class BooksViewModelTest :  BaseTestClass() {
 
     private lateinit var bookRepository: BookRepository
     private lateinit var booksViewModel: BooksViewModel
+   // private lateinit var dataSourceFactory: BooksDataSourceFactory
+
+    @Mock
     private lateinit var dataSourceFactory: BooksDataSourceFactory
+
 
     @ExperimentalCoroutinesApi
     @Before
@@ -23,20 +28,20 @@ class BooksViewModelTest :  BaseTestClass() {
         super.before()
         bookRepository = get()
         booksViewModel = get()
-        dataSourceFactory = get()
+        dataSourceFactory = BooksDataSourceFactory(bookRepository)
     }
 
     @Test
     fun bookSearch_search_is_successful(){
         assert(booksViewModel.booksLiveData.value == BooksState.Startup)
-        booksViewModel.search(TEST_SEARCH)
-        return runBlocking {
-               when( booksViewModel.booksLiveData.value){
-                is BooksState.Loading ->{
-                    print("Tested Search")
-                }
-            }
-        }
+        runBlocking {
+             booksViewModel.search(TEST_SEARCH).apply {
 
+             }
+            val value = booksViewModel.getMoviesPagedList()?.value
+            println("Book Search Tested")
+            println(value)
+            assert(value.isNullOrEmpty())
+        }
     }
 }

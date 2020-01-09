@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@+id/recyclerBookList"
         app:layout_constraintVertical_bias="0.20" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/bookFragmentErrorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,6 +58,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookFragmentErrorTextView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.Group>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

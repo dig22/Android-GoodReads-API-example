@@ -15,6 +15,8 @@ class BooksDataSource (private val bookRepository: BookRepository,
 
    // var searchQuery : String = "test"
 
+
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Book>
@@ -52,7 +54,6 @@ class BooksDataSource (private val bookRepository: BookRepository,
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
-       //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     interface ErrorListener{

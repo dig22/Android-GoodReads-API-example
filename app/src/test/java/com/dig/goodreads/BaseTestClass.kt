@@ -29,7 +29,7 @@ const val TEST_BOOK_ID = 375802
 const val TEST_SEARCH_WRONG = "/page/&q="
 const val TEST_BOOK_ID_WRONG = 1010101010
 
-@Ignore
+@Ignore("Base Class does not contain any tests")
 @RunWith(MockitoJUnitRunner::class)
 open class BaseTestClass : KoinTest{
 
@@ -45,7 +45,10 @@ open class BaseTestClass : KoinTest{
         Dispatchers.setMain(Dispatchers.Unconfined)
         startKoin {
             androidContext(application)
-            modules(listOf(dataSourceModuleTD, viewModelModuleTD))
+            modules(listOf(
+                dataSourceModuleTD,
+                viewModelModuleTD
+            ))
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
 
 class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel() , BooksDataSource.ErrorListener  {
 
-    private var booksPagedList: LiveData<PagedList<Book>>? = null
+    private val booksPagedList: LiveData<PagedList<Book>>
 
     private var privateState = MutableLiveData<BooksState>()
 
@@ -46,7 +46,6 @@ class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel
     fun search(searchQuery :String) {
 
         privateState.postValue(BooksState.Loading)
-
 
         if(searchQuery == searchQueryCache){
             privateState.postValue(BooksState.BooksLoadedFromCache)
