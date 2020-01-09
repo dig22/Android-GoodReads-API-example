@@ -3,14 +3,12 @@ package com.dig.goodReads.data
 import androidx.paging.PageKeyedDataSource
 import com.dig.goodReads.components.books.BooksState
 import com.dig.goodReads.model.Book
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.*
 
 class BooksDataSource (private val bookRepository: BookRepository,
                        private var searchQuery : String,
                        private var errorListener : ErrorListener?,
-                       private val scope: CoroutineScope = CoroutineScope(newSingleThreadContext("BookDataSource"))
+                       private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 ) :  PageKeyedDataSource<Int, Book>() {
 
    // var searchQuery : String = "test"
@@ -22,7 +20,7 @@ class BooksDataSource (private val bookRepository: BookRepository,
         callback: LoadInitialCallback<Int, Book>
     ) {
 
-        scope.launch{
+        runBlocking {
             bookRepository.searchBooksNew(searchQuery,1).apply {
                 when(this){
                     is BooksState.BooksLoaded ->{
@@ -34,12 +32,10 @@ class BooksDataSource (private val bookRepository: BookRepository,
                 }
             }
         }
-
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
-
-        scope.launch{
+        runBlocking{
             bookRepository.searchBooksNew(searchQuery,1).apply {
                 when(this){
                     is BooksState.BooksLoaded ->{

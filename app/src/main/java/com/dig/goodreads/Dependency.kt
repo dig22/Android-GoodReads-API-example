@@ -18,3 +18,7 @@ val viewModelModule = module {
     viewModel { DetailsViewModel(get())}
     viewModel { BooksViewModel(get()) }
 }
+
+const val GOOD_READS_HOME = "https://www.goodreads.com/"
+const val BOOK_DETAILS_API = "${GOOD_READS_HOME}book/isbn/"
+const val SEARCH_API = "${GOOD_READS_HOME}search/index.xml?key=${BuildConfig.GOOD_READS_KEY}"

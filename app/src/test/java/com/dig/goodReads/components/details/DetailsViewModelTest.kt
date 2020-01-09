@@ -33,8 +33,6 @@ class DetailsViewModelTest : BaseTestClass() {
     @After
     override fun after(){
         super.after()
-
-        //detailsViewModel.
     }
 
     @Test

@@ -2,18 +2,20 @@ package com.dig.goodReads.components.books
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.dig.goodReads.data.BooksDataSource
 import com.dig.goodReads.data.BooksDataSourceFactory
+import com.dig.goodReads.helper.CoroutineViewModel
 import com.dig.goodReads.model.Book
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel() , BooksDataSource.ErrorListener  {
+class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory,
+                     uiContext: CoroutineContext = Dispatchers.Main) : CoroutineViewModel(uiContext) , BooksDataSource.ErrorListener  {
 
-    private val booksPagedList: LiveData<PagedList<Book>>
+    var booksPagedList: LiveData<PagedList<Book>>? = null
 
     private var privateState = MutableLiveData<BooksState>()
 
@@ -40,22 +42,17 @@ class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel
         privateState.postValue(BooksState.Startup)
     }
 
-    fun search(searchQuery :String, refresh : Boolean = false) {
+    fun search(searchQuery :String, refresh : Boolean = false) = launch {
 
         privateState.postValue(BooksState.Loading)
 
         if(searchQuery == searchQueryCache && !refresh){
             privateState.postValue(BooksState.BooksLoadedFromCache)
-            return
+        }else{
+            factory.searchQuery = searchQuery
+            factory.booksDataSource?.invalidate()
+            searchQueryCache = searchQuery
         }
-
-        factory.searchQuery = searchQuery
-        factory.booksDataSource?.invalidate()
-        searchQueryCache = searchQuery
-    }
-
-    fun getMoviesPagedList(): LiveData<PagedList<Book>>? {
-        return booksPagedList
     }
 
     override fun onError(error: String) {

@@ -91,7 +91,7 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
 
         var books : PagedList<Book>
 
-        booksViewModel.getMoviesPagedList()?.observe(this, Observer<PagedList<Book>> {
+        booksViewModel.booksPagedList?.observe(this, Observer<PagedList<Book>> {
             books = it
             adapter.submitList(books)
             recyclerBookList.adapter?.notifyDataSetChanged()
