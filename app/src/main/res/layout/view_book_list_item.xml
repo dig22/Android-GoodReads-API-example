@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bookItemName"
         android:layout_width="0dp"
         android:layout_height="24sp"
@@ -26,7 +26,7 @@
         tools:text="@string/book_name"
         android:scrollbars = "horizontal"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bookItemImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/screen_background_dark_transparent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bookItemAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

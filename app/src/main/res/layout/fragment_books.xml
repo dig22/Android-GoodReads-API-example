@@ -30,34 +30,36 @@
         app:layout_constraintTop_toTopOf="@+id/recyclerBookList"
         app:layout_constraintVertical_bias="0.20" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bookFragmentErrorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recyclerBookList"
+        app:layout_constraintTop_toTopOf="@+id/bookFragmentErrorView"
+        tools:text="Display Error Text" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bookFragmentReloadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookFragmentErrorTextView" />
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/bookFragmentErrorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        app:constraint_referenced_ids="bookFragmentReloadButton,bookFragmentErrorTextView"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recyclerBookList">
 
-        <TextView
-            android:id="@+id/bookFragmentErrorTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Display Error Text" />
 
-        <Button
-            android:id="@+id/bookFragmentReloadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/reload"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookFragmentErrorTextView" />
     </androidx.constraintlayout.widget.Group>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
