@@ -10,5 +10,5 @@
     <string name="reload">Reload</string>
     <string name="search">Search</string>
     <string name="byAuthor">by %1$s</string>
-
+    <string name="defaultSearchString">Game</string>
 </resources>

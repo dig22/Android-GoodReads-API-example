@@ -23,8 +23,6 @@ import org.koin.core.KoinComponent
 
 class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, KoinComponent{
 
-    private  val DEFAULT_SEARCH = "Game"
-
     private val booksViewModel : BooksViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,7 +126,11 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
         val searchView = mSearchMenuItem.actionView as SearchView
 
         bookFragmentReloadButton.onClick {
-            booksViewModel.search(searchView.query.toString())
+            if(searchView.query.isNullOrBlank())
+                booksViewModel.search(resources.getString(R.string.defaultSearchString),true)
+            else{
+                booksViewModel.search(searchView.query.toString(),true)
+            }
         }
 
         val searchThrottle = Handler()
@@ -146,7 +148,7 @@ class BooksFragment : Fragment() , BooksPagedListAdapter.OnBookClickListener, Ko
                     isLoading()
 
                     if( searchView.query.isNullOrBlank()){
-                        booksViewModel.search(DEFAULT_SEARCH)
+                        booksViewModel.search(resources.getString(R.string.defaultSearchString))
                     }else{
                         booksViewModel.search(newText!!)
                     }

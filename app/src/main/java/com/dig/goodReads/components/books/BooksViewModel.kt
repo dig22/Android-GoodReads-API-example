@@ -43,11 +43,11 @@ class BooksViewModel(booksDataSourceFactory: BooksDataSourceFactory) : ViewModel
         privateState.postValue(BooksState.Startup)
     }
 
-    fun search(searchQuery :String) {
+    fun search(searchQuery :String, refresh : Boolean = false) {
 
         privateState.postValue(BooksState.Loading)
 
-        if(searchQuery == searchQueryCache){
+        if(searchQuery == searchQueryCache && !refresh){
             privateState.postValue(BooksState.BooksLoadedFromCache)
             return
         }
