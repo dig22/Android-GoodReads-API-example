@@ -2,7 +2,6 @@ package com.dig.goodReads.components.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dig.goodReads.data.BookRepository
 import com.dig.goodReads.helper.CoroutineViewModel
 import com.dig.goodReads.model.Book
 import kotlinx.coroutines.Dispatchers

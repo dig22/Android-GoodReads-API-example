@@ -6,7 +6,6 @@ import com.dig.goodReads.components.details.DetailsState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 class BookRepositoryTest : BaseTestClass() {
 
