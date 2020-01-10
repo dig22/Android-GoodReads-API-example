@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import kotlin.coroutines.CoroutineContext
 
-class DetailsViewModel (private val bookRepository : BookRepository,
+class DetailsViewModel (private val detailsFetchUseCase : DetailsFetchUseCase,
                         uiContext: CoroutineContext = Dispatchers.Main) :
     KoinComponent,  CoroutineViewModel(uiContext) {
 
@@ -31,7 +31,7 @@ class DetailsViewModel (private val bookRepository : BookRepository,
             return@launch
         }
         privateState.value = DetailsState.Loading
-        privateState.value = bookRepository.getBookDescription(book.id).also {
+        privateState.value = detailsFetchUseCase.getBookDescription(book.id).also {
             when(it){
                 is DetailsState.DetailsLoaded ->{
                     book.details = it.details

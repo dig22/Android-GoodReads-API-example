@@ -3,6 +3,7 @@ package com.dig.goodReads
 import com.dig.goodReads.data.BookRepository
 import com.dig.goodReads.components.books.BooksState
 import com.dig.goodReads.components.books.BooksViewModel
+import com.dig.goodReads.components.details.DetailsFetchUseCase
 import com.dig.goodReads.components.details.DetailsState
 import com.dig.goodReads.components.details.DetailsViewModel
 import com.dig.goodReads.data.BooksDataSourceFactory
@@ -13,6 +14,7 @@ import org.koin.dsl.module
 val dataSourceModuleTD = module {
 
     single { BookRepositoryImplTD() as BookRepository }
+    single { DetailsFetchUseCase(get()) }
     single { BooksDataSourceFactory(get()) }
 }
 
