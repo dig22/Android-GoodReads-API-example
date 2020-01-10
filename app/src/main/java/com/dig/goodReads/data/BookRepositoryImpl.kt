@@ -12,16 +12,18 @@ import com.github.kittinunf.fuel.coroutines.awaitString
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.lang.Exception
 
 
 
-class BookRepositoryImpl
-            constructor(private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default)
-            : BookRepository{
-    override suspend fun searchBooksNew(searchString : String,page : Int): BooksState = withContext(backgroundDispatcher) {
-        val url = "$SEARCH_API&q=$searchString&page=$page"
+class BookRepositoryImpl : BookRepository, KoinComponent{
 
+    private val backgroundDispatcher: CoroutineDispatcher = Dispatchers.Default
+
+    override suspend fun searchBooks(searchString : String, page : Int): BooksState = withContext(backgroundDispatcher) {
+        val url = "$SEARCH_API&q=$searchString&page=$page"
         try {
             val result = Fuel.get(url).awaitString()
             val resData = ResponseConverter.xmlToJson(result)
@@ -54,6 +56,7 @@ class BookRepositoryImpl
             return@withContext BooksState.Error("")
         }
     }
+
     override suspend fun getBookDescription(bookId : Int) : DetailsState = withContext(backgroundDispatcher){
         val url = "$BOOK_DETAILS_API$bookId?key=${BuildConfig.GOOD_READS_KEY}"
         try{
@@ -68,4 +71,3 @@ class BookRepositoryImpl
         }
     }
 }
-

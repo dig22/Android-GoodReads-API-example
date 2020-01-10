@@ -38,7 +38,7 @@ class BookRepositoryImplTD : BookRepository{
         return DetailsState.DetailsLoaded("TestDescription")
     }
 
-    override suspend fun searchBooksNew(searchString: String, page: Int): BooksState {
+    override suspend fun searchBooks(searchString: String, page: Int): BooksState {
         if(isError){
             return BooksState.Error(TEST_ERROR)
         }

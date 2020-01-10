@@ -21,7 +21,7 @@ class BooksDataSource (private val bookRepository: BookRepository,
     ) {
 
         runBlocking {
-            bookRepository.searchBooksNew(searchQuery,1).apply {
+            bookRepository.searchBooks(searchQuery,1).apply {
                 when(this){
                     is BooksState.BooksLoaded ->{
                         callback.onResult(books,null,2)
@@ -36,7 +36,7 @@ class BooksDataSource (private val bookRepository: BookRepository,
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Book>) {
         runBlocking{
-            bookRepository.searchBooksNew(searchQuery,1).apply {
+            bookRepository.searchBooks(searchQuery,1).apply {
                 when(this){
                     is BooksState.BooksLoaded ->{
                         callback.onResult(books, params.key+1)

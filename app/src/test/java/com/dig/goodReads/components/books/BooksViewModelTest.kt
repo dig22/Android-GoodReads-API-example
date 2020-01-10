@@ -58,7 +58,7 @@ class BooksViewModelTest :  BaseTestClass() {
     }
 
     @Test
-    fun bookPanelist_is_initialized(){
+    fun bookPanelist_is_initialized_onStartup(){
         assert(booksViewModel.booksPagedList != null )
     }
 
@@ -84,15 +84,6 @@ class BooksViewModelTest :  BaseTestClass() {
     @Test
     fun bookSearch_searchWasNotCached_is_successful() = runBlocking{
         assert(booksViewModel.booksLiveData.value == BooksState.Startup)
-        booksViewModel.search(TEST_SEARCH).join()
-        booksViewModel.search(TEST_SEARCH+"DON'T CACHE").join()
-        verify(dataSource,times(2)).invalidate()
-    }
-
-    @Test
-    fun bookSearch_is_FailsWith_Error() = runBlocking{
-        assert(booksViewModel.booksLiveData.value == BooksState.Startup)
-
         booksViewModel.search(TEST_SEARCH).join()
         booksViewModel.search(TEST_SEARCH+"DON'T CACHE").join()
         verify(dataSource,times(2)).invalidate()
