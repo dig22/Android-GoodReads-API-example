@@ -7,8 +7,7 @@ import kotlinx.coroutines.*
 
 class BooksDataSource (private val bookRepository: BookRepository,
                        private var searchQuery : String,
-                       private var errorListener : ErrorListener?,
-                       private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+                       private var errorListener : ErrorListener?
 ) :  PageKeyedDataSource<Int, Book>() {
 
    // var searchQuery : String = "test"

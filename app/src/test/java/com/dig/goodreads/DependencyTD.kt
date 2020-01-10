@@ -25,7 +25,7 @@ val viewModelModuleTD = module {
 class BookRepositoryImplTD : BookRepository{
 
     var isError = false
-    var books : ArrayList<Book> = ArrayList(listOf(
+    private var books : ArrayList<Book> = ArrayList(listOf(
         Book(1, "TestName", "", 0, "")
     ))
 

@@ -6,11 +6,11 @@ import com.dig.goodReads.components.details.DetailsState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
-
 class BookRepositoryTest : BaseTestClass() {
 
-    lateinit var bookRepository: BookRepository
+    private lateinit var bookRepository: BookRepository
 
     @ExperimentalCoroutinesApi
     @Before
@@ -24,13 +24,14 @@ class BookRepositoryTest : BaseTestClass() {
     fun bookSearch_success() = runBlocking {
         val value =bookRepository.searchBooks(TEST_SEARCH,1)
         assert(value is BooksState.BooksLoaded)
+        assert((value as BooksState.BooksLoaded).books.isNotEmpty())
     }
 
     @Test
     fun fetchBook_details_success() = runBlocking {
         val value =bookRepository.getBookDescription(TEST_BOOK_ID)
         assert(value is DetailsState.DetailsLoaded)
-
+        assert((value as DetailsState.DetailsLoaded).details.isNotEmpty())
     }
 
     @Test
