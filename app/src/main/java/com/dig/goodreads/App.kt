@@ -11,7 +11,6 @@ class App : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         startKoin {
-            androidContext(this@App)
             modules(listOf(dataSourceModule,viewModelModule))
         }
     }
