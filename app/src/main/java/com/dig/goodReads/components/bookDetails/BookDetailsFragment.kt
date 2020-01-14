@@ -1,4 +1,4 @@
-package com.dig.goodReads.components.details
+package com.dig.goodReads.components.bookDetails
 
 
 import android.os.Bundle
@@ -17,11 +17,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 
-class DetailsFragment : Fragment() , KoinComponent {
+class BookDetailsFragment : Fragment() , KoinComponent {
 
 
-    private val args: DetailsFragmentArgs by navArgs()
-    private val detailsViewModel : DetailsViewModel by viewModel()
+    private val args: BookDetailsFragmentArgs by navArgs()
+    private val bookDetailsViewModel : BookDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class DetailsFragment : Fragment() , KoinComponent {
         Picasso.get().load(book.ImageUrlLarge).into(bookDetailBookImage)
         bookDetailBookTitle.text = book.name
 
-        detailsViewModel.detailsLiveData.observe(this, Observer<DetailsState> { detailsState ->
+        bookDetailsViewModel.bookDetailsLiveData.observe(this, Observer<BookDetailsState> { detailsState ->
 
             if (detailsState == null) {
                 return@Observer
@@ -64,14 +64,14 @@ class DetailsFragment : Fragment() , KoinComponent {
 
             when (detailsState) {
                 //TODO : Other States
-                is DetailsState.Startup -> {
+                is BookDetailsState.Startup -> {
                     bookDetailsProgressBar.visibility = View.VISIBLE
-                    detailsViewModel.fetchDetails(book)
+                    bookDetailsViewModel.fetchDetails(book)
                 }
-                is DetailsState.DetailsLoaded ->{
+                is BookDetailsState.BookDetailsLoaded ->{
                     detailsLoaded(detailsState.details)
                 }
-                is DetailsState.DetailsLoadedFromCache ->{
+                is BookDetailsState.BookDetailsLoadedFromCache ->{
                     detailsLoaded(detailsState.details)
                 }
             }

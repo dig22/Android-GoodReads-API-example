@@ -2,7 +2,7 @@ package com.dig.goodReads.data
 
 import com.dig.goodReads.*
 import com.dig.goodReads.components.books.BooksState
-import com.dig.goodReads.components.details.DetailsState
+import com.dig.goodReads.components.bookDetails.BookDetailsState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -29,8 +29,8 @@ class BookRepositoryTest : BaseTestClass() {
     @Test
     fun fetchBook_details_success() = runBlocking {
         val value =bookRepository.getBookDescription(TEST_BOOK_ID)
-        assert(value is DetailsState.DetailsLoaded)
-        assert((value as DetailsState.DetailsLoaded).details.isNotEmpty())
+        assert(value is BookDetailsState.BookDetailsLoaded)
+        assert((value as BookDetailsState.BookDetailsLoaded).details.isNotEmpty())
     }
 
     @Test
@@ -42,7 +42,7 @@ class BookRepositoryTest : BaseTestClass() {
     @Test
     fun fetchBook_details_failWith_Error() = runBlocking {
         val value = bookRepository.getBookDescription(TEST_BOOK_ID_WRONG)
-        assert(value is DetailsState.Error)
+        assert(value is BookDetailsState.Error)
     }
 
 }

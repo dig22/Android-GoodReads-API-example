@@ -1,4 +1,4 @@
-package com.dig.goodReads.components.details
+package com.dig.goodReads.components.bookDetails
 
 import com.dig.goodReads.BaseTestClass
 import com.dig.goodReads.BookRepositoryImplTD
@@ -13,10 +13,10 @@ import org.junit.Test
 import org.koin.test.get
 
 
-class DetailsViewModelTest : BaseTestClass() {
+class BookDetailsViewModelTest : BaseTestClass() {
 
     private lateinit var bookRepository: BookRepository
-    private lateinit var detailsViewModel: DetailsViewModel
+    private lateinit var bookDetailsViewModel: BookDetailsViewModel
     private lateinit var  book : Book
 
     @ExperimentalCoroutinesApi
@@ -24,7 +24,7 @@ class DetailsViewModelTest : BaseTestClass() {
     override fun before() {
         super.before()
         bookRepository = get()
-        detailsViewModel = get()
+        bookDetailsViewModel = get()
 
         book =
             Book(1, "testName", "", 0, "testAuthor")
@@ -38,13 +38,13 @@ class DetailsViewModelTest : BaseTestClass() {
     @Test
     fun bookDetails_fetchDetails_is_successful()=
         runBlocking {
-            assert(detailsViewModel.detailsLiveData.value == DetailsState.Startup)
-            detailsViewModel.fetchDetails(book).join()
-            val value = detailsViewModel.detailsLiveData.value
+            assert(bookDetailsViewModel.bookDetailsLiveData.value == BookDetailsState.Startup)
+            bookDetailsViewModel.fetchDetails(book).join()
+            val value = bookDetailsViewModel.bookDetailsLiveData.value
 
             assert(value != null)
             when (value) {
-                is DetailsState.DetailsLoaded -> {
+                is BookDetailsState.BookDetailsLoaded -> {
                     println("Tested Details Loaded")
                     assert(value.details.isNotBlank())
                 }
@@ -58,13 +58,13 @@ class DetailsViewModelTest : BaseTestClass() {
     fun bookDetails_fetchDetails_is_Error() =
         runBlocking {
             setError()
-            assert(detailsViewModel.detailsLiveData.value == DetailsState.Startup)
-            detailsViewModel.fetchDetails(book).join()
-            val value = detailsViewModel.detailsLiveData.value
+            assert(bookDetailsViewModel.bookDetailsLiveData.value == BookDetailsState.Startup)
+            bookDetailsViewModel.fetchDetails(book).join()
+            val value = bookDetailsViewModel.bookDetailsLiveData.value
 
             assert(value != null)
             when (value) {
-                is DetailsState.Error -> {
+                is BookDetailsState.Error -> {
                     println("Tested Error")
                     assert(value.message == TEST_ERROR)
                 }
@@ -81,16 +81,16 @@ class DetailsViewModelTest : BaseTestClass() {
     @Test
     fun bookDetails_fetchDetails_cachesBook()=
         runBlocking {
-            assert(detailsViewModel.detailsLiveData.value == DetailsState.Startup)
+            assert(bookDetailsViewModel.bookDetailsLiveData.value == BookDetailsState.Startup)
 
-            detailsViewModel.fetchDetails(book).join()
-            detailsViewModel.fetchDetails(book).join()
+            bookDetailsViewModel.fetchDetails(book).join()
+            bookDetailsViewModel.fetchDetails(book).join()
 
-            val value = detailsViewModel.detailsLiveData.value
+            val value = bookDetailsViewModel.bookDetailsLiveData.value
 
             assert(value != null)
             when (value) {
-                is DetailsState.DetailsLoadedFromCache -> {
+                is BookDetailsState.BookDetailsLoadedFromCache -> {
                     println("Tested Details Loaded From Cache")
                     assert(value.details.isNotBlank())
                 }
@@ -103,17 +103,17 @@ class DetailsViewModelTest : BaseTestClass() {
     @Test
     fun bookDetails_fetchDetails_Invalidates_cachedBook()=
         runBlocking {
-            assert(detailsViewModel.detailsLiveData.value == DetailsState.Startup)
+            assert(bookDetailsViewModel.bookDetailsLiveData.value == BookDetailsState.Startup)
 
-            detailsViewModel.fetchDetails(book).join()
+            bookDetailsViewModel.fetchDetails(book).join()
             val newBook = Book(2, "", "", 2, "")
-            detailsViewModel.fetchDetails(newBook).join()
+            bookDetailsViewModel.fetchDetails(newBook).join()
 
-            val value = detailsViewModel.detailsLiveData.value
+            val value = bookDetailsViewModel.bookDetailsLiveData.value
 
             assert(value != null)
             when (value) {
-                is DetailsState.DetailsLoaded -> {
+                is BookDetailsState.BookDetailsLoaded -> {
                     println("Tested Details Cache Invalidated")
                     assert(value.details.isNotBlank())
                 }

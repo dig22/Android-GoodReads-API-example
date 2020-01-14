@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.dig.goodReads.components.details.DetailsFragment"
+        android:name="com.dig.goodReads.components.bookDetails.BookDetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" >
         <argument

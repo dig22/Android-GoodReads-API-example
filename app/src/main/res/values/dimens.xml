@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="my_value">16dp</dimen>
+
+    <!--Typography-->
+    <dimen name="textSmall">12sp</dimen>
+    <dimen name="textMedium">16sp</dimen>
+    <dimen name="textBig">18sp</dimen>
+    <dimen name="textLarge">24sp</dimen>
+    <dimen name="textHuge">32sp</dimen>
+
+    <dimen name="bookListItemHeadingTextView_Height">24sp</dimen>
+
+    <!--Margin-->
+    <dimen name="marginSmall">8dp</dimen>
+    <dimen name="marginMedium">16dp</dimen>
+    <dimen name="marginBig">18dp</dimen>
+    <dimen name="marginLarge">24dp</dimen>
+    <dimen name="marginHuge">32dp</dimen>
+
+    <!--Padding-->
+    <dimen name="paddingSmall">10dp</dimen>
+    <dimen name="paddingMedium">16dp</dimen>
+    <dimen name="paddingBig">18dp</dimen>
+    <dimen name="paddingLarge">24dp</dimen>
+    <dimen name="paddingHuge">32dp</dimen>
+
+    <!--Image-->
+    <dimen name="imageListItem">80sp</dimen>
+    <dimen name="imageDetailsPage">200sp</dimen>
+
+</resources>

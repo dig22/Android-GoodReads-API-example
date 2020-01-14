@@ -5,7 +5,7 @@ import com.dig.goodReads.BuildConfig
 import com.dig.goodReads.SEARCH_API
 import com.dig.goodReads.model.Book
 import com.dig.goodReads.components.books.BooksState
-import com.dig.goodReads.components.details.DetailsState
+import com.dig.goodReads.components.bookDetails.BookDetailsState
 import com.dig.goodReads.helper.ResponseConverter
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.coroutines.awaitString
@@ -54,7 +54,7 @@ class BookRepositoryImpl : BookRepository, KoinComponent{
         }
     }
 
-    override suspend fun getBookDescription(bookId : Int) : DetailsState = withContext(backgroundDispatcher){
+    override suspend fun getBookDescription(bookId : Int) : BookDetailsState = withContext(backgroundDispatcher){
         val url = "$BOOK_DETAILS_API$bookId?key=${BuildConfig.GOOD_READS_KEY}"
         try{
             val result = Fuel.get(url).awaitString()
@@ -62,9 +62,9 @@ class BookRepositoryImpl : BookRepository, KoinComponent{
             val responseBookDescription = resultData?.getJSONObject("GoodreadsResponse")!!
                     .getJSONObject("book")
                     .getString("description")
-            return@withContext DetailsState.DetailsLoaded(ResponseConverter.htmlToText(responseBookDescription))
+            return@withContext BookDetailsState.BookDetailsLoaded(ResponseConverter.htmlToText(responseBookDescription))
         }catch (e : Exception){
-            return@withContext DetailsState.Error("")
+            return@withContext BookDetailsState.Error("")
         }
     }
 }

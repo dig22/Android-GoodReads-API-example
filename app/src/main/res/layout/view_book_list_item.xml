@@ -11,27 +11,26 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bookItemName"
         android:layout_width="0dp"
-        android:layout_height="24sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_height="@dimen/bookListItemHeadingTextView_Height"
+        android:layout_marginStart="@dimen/marginSmall"
+        android:layout_marginTop="@dimen/marginMedium"
+        android:layout_marginEnd="@dimen/marginHuge"
         android:fontFamily="sans-serif-condensed-light"
-        android:textColor="#000000"
-        android:textSize="18sp"
+        android:scrollbars="horizontal"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/textBig"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/bookItemImage"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/book_name"
-        android:scrollbars = "horizontal"/>
+        tools:text="@string/book_name" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bookItemImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/imageListItem"
+        android:layout_height="@dimen/imageListItem"
         android:contentDescription="@string/image_content_description"
-        android:padding="10dp"
+        android:padding="@dimen/paddingSmall"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/screen_background_dark_transparent" />
@@ -40,7 +39,7 @@
         android:id="@+id/bookItemAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="@dimen/textSmall"
         app:layout_constraintStart_toStartOf="@+id/bookItemName"
         app:layout_constraintTop_toBottomOf="@+id/bookItemName"
         tools:text="By Author Name" />
