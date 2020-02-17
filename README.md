@@ -4,7 +4,7 @@ A project that demonstrate MVVM, Kotlin-Coroutines, Dependency Injection through
 
 ## Screenshot
 
-![Gif demonstrating the App](https://im3.ezgif.com/tmp/ezgif-3-e882506b3817.gif)
+![Gif demonstrating the App](https://i.ibb.co/6HH5ypm/screenshot.gif)
 
 ## Instructions
 
