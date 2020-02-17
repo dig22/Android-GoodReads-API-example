@@ -18,4 +18,4 @@
 projectFilesBackup
 
 #ENV
-gradle.properties
+#gradle.properties
